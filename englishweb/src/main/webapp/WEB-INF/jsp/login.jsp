@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Login | E-Shop</title>
+    <title>Login | Holy Network</title>
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="/resources/css/font-awesome.min.css" rel="stylesheet">
     <link href="/resources/css/prettyPhoto.css" rel="stylesheet">
@@ -73,36 +73,10 @@
 								Keep me signed in
 							</span>
 							<button type="submit" class="btn btn-default">Login</button>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						</form>
 					</div><!--/login form-->
 				</div>
-				<div class="col-sm-1">
-					<h2 class="or">OR</h2>
-				</div>
-				<div class="col-sm-4">
-					<div class="signup-form"><!--sign up form-->
-						<h2>New User Signup!</h2>
-						<form:form action="/register" modelAttribute="user" method="post" >
-							<form:input type="text" placeholder="Username" path="username"/>
-							<form:input type="email" placeholder="Email Address" path="email"/>
-							<form:input type="password" placeholder="Password" path="password"/>
-							<select name="language">
-								<c:forEach var="language" items="${languages}">
-									<option value="${language.name}">${language.name}</option>
-								</c:forEach>
-							</select>
-							<select name="country">
-								<c:forEach var="country" items="${countries}">
-									<option value="${country.name}"> ${country.name}</option>
-								</c:forEach>
-							</select>
-							<button type="submit" class="btn btn-default">Signup</button>
-						</form:form>
 
-						<c:if test="${not empty thanhcong}">${thanhcong} </c:if>
-						<c:if test="${not empty thongbao}">${thongbao}</c:if>
-					</div><!--/sign up form-->
 				</div>
 			</div>
 		</div>

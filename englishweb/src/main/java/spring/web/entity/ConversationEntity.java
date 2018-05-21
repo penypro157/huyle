@@ -3,18 +3,16 @@ package spring.web.entity;
 import com.mysema.query.annotations.QueryEntity;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
 import java.util.ArrayList;
 @QueryEntity
 @Document
 public class ConversationEntity {
     @Id private ObjectId conversationId;
-    private ArrayList<UserEntity> userEntities;
+    private ArrayList<HoSoTaiKhoan> userEntities;
 
-    public ConversationEntity( ArrayList<UserEntity> userEntities) {
+    public ConversationEntity( ArrayList<HoSoTaiKhoan> userEntities) {
         this.userEntities = userEntities;
     }
 
@@ -28,11 +26,11 @@ public class ConversationEntity {
         this.conversationId = conversationId;
     }
 
-    public ArrayList<UserEntity> getUserEntities() {
+    public ArrayList<HoSoTaiKhoan> getUserEntities() {
         return userEntities;
     }
 
-    public void setUserEntities(ArrayList<UserEntity> userEntities) {
+    public void setUserEntities(ArrayList<HoSoTaiKhoan> userEntities) {
         this.userEntities = userEntities;
     }
 }

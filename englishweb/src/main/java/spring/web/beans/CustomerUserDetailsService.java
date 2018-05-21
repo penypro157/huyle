@@ -2,8 +2,6 @@ package spring.web.beans;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -11,10 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import spring.web.entity.UserEntity;
-import spring.web.repo.UserRepository;
+import spring.web.entity.HoSoTaiKhoan;
+import spring.web.entity.TaiKhoan;
+import spring.web.repo.TaiKhoanRepo;
+import spring.web.service.TaiKhoanService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,7 @@ import java.util.List;
 @Component
 public class CustomerUserDetailsService implements UserDetailsService {
     @Autowired
-    UserRepository userRepository;
+    TaiKhoanService taiKhoanService;
     private UserDetails userDetails;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -31,21 +29,24 @@ public class CustomerUserDetailsService implements UserDetailsService {
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
-        UserEntity userEntity=userRepository.findByEmail(email);
-        userDetails= new User(userEntity.getEmail(),userEntity.getPassword(),enabled,accountNonExpired,credentialsNonExpired,accountNonLocked,getAuthorities(userEntity.getRoles()));
+        TaiKhoan taiKhoan= taiKhoanService.getTaiKhoanByEmail(email);
+        try {
+            userDetails = new User(taiKhoan.getEmail(), taiKhoan.getPassword(),enabled,accountNonExpired,credentialsNonExpired,accountNonLocked,getAuthorities(taiKhoan.getTrangThai().getRole()));
+        }
+         catch (Exception e){
+             System.out.println(e);
+         }
 
         return userDetails;
     }
     public List<GrantedAuthority> getAuthorities(Integer role) {
         List<GrantedAuthority> authList = new ArrayList<>();
         if (role.intValue() == 1) {
-            authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         } else if (role.intValue() == 2) {
             authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
-
-        System.out.println(authList);
         return authList;
     }
 }

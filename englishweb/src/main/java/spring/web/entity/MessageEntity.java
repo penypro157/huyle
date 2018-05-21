@@ -15,13 +15,13 @@ public class    MessageEntity {
     @DBRef
     private ConversationEntity conversationEntity;
     @DBRef
-    private UserEntity userEntity;
+    private HoSoTaiKhoan hoSoTaiKhoan;
     private String content;
     private boolean status;
     private Date createdDay;
-    public MessageEntity(ConversationEntity conversationEntity, UserEntity userEntity, String content, boolean status, Date createdDay) {
+    public MessageEntity(ConversationEntity conversationEntity, HoSoTaiKhoan hoSoTaiKhoan, String content, boolean status, Date createdDay) {
         this.conversationEntity = conversationEntity;
-        this.userEntity = userEntity;
+        this.hoSoTaiKhoan = hoSoTaiKhoan;
         this.content = content;
         this.status= status;
         this.createdDay = createdDay;
@@ -54,12 +54,12 @@ public class    MessageEntity {
         this.conversationEntity = conversationEntity;
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public HoSoTaiKhoan getHoSoTaiKhoan() {
+        return hoSoTaiKhoan;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setHoSoTaiKhoan(HoSoTaiKhoan hoSoTaiKhoan) {
+        this.hoSoTaiKhoan = hoSoTaiKhoan;
     }
 
     public String getContent() {

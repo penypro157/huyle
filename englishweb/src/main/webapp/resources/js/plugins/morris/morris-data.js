@@ -182,7 +182,7 @@ $(function() {
         }, ],
         // The name of the data record attribute that contains x-visitss.
         xkey: 'd',
-        // A list of names of data record attributes that contain y-visitss.
+        // service list of names of data record attributes that contain y-visitss.
         ykeys: ['visits'],
         // Labels for the ykeys -- will be displayed when you hover over the
         // chart.

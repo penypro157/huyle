@@ -10,4 +10,8 @@ public class ErrorController {
         return "404";
 
     }
+    @RequestMapping(value = "/home")
+    public  String homePage(){
+        return "room";
+    }
 }
