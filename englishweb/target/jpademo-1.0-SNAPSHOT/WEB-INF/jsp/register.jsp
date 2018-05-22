@@ -63,9 +63,9 @@
 <section id="form"><!--form-->
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-4"  >
                 <div class="signup-form"><!--sign up form-->
-                    <h2>New User Signup!</h2>
+                    <h2>Đăng ký tài khoản</h2>
                     <form:form action="/register" modelAttribute="user" method="post" >
                         <form:input type="email" placeholder="Email Address" path="email"/>
                         <form:input type="password" placeholder="Password" path="password"/>

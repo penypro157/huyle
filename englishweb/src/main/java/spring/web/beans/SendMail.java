@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class SendMail {
     static final String server = "huyl472@gmail.com";
-    static final String password = "34613736";
+    static final String password = "lethithanhthuy";
 
     public boolean sendMail(Mail mail) {
         Properties props = new Properties();
@@ -42,7 +42,7 @@ public class SendMail {
     }
 
     public String generateRandomString(int lenght) {
-        String s = "1234567890qưertyuiopasdfghjklzxcvbnmQƯERTYUIOPASDFGHJKLZXCVBNM";
+        String s = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < lenght; i++) {
             int character = (int) (Math.random() * s.length());
@@ -52,16 +52,5 @@ public class SendMail {
 
     }
 
-    public boolean validMail(String email) {
-        try {
-            InternetAddress internetAddress = new InternetAddress(email);
-            internetAddress.validate();
-            return true;
-        } catch (AddressException e) {
-            System.out.println("Error");
-
-        }
-        return false;
-    }
 
 }
