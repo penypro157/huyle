@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import spring.web.beans.Mail;
+import spring.web.beans.SendMail;
+import spring.web.beans.VerifyMail;
 import spring.web.entity.*;
 import spring.web.repo.CountryRepo;
 
@@ -26,11 +29,19 @@ public class RegisterController {
             model.addAttribute("result", false);
             return "register";
         }
-        TrangThai trangThai= new TrangThai(1,true,false);
-        taiKhoan.setTrangThai(trangThai);
-        if(taiKhoanService.addTaiKhoan(taiKhoan))
-        return "login";
-        model.addAttribute("notice","Dang ky khong thanh cong, xin moi nguoi dung thu lai");
+        SendMail sendMail = new SendMail();
+        if (!sendMail.validMail(taiKhoan.getEmail())) {
+            model.addAttribute("notice", "Tài khoản email không hợp lệ");
+        }
+        Mail mail = new VerifyMail(taiKhoan.getEmail(), sendMail.generateRandomString(30));
+        if (sendMail.sendMail(mail)) {
+            TrangThai trangThai = new TrangThai(1, true, false);
+            taiKhoan.setTrangThai(trangThai);
+            taiKhoanService.addTaiKhoan(taiKhoan);
+            return "login";
+        }
+
+        model.addAttribute("notice", "Dang ky khong thanh cong, xin moi nguoi dung thu lai");
         return "register";
 
     }

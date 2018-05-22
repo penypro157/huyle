@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -62,14 +63,14 @@
 <section id="form"><!--form-->
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-4"  >
                 <div class="signup-form"><!--sign up form-->
-                    <h2>New User Signup!</h2>
+                    <h2>Đăng ký tài khoản</h2>
                     <form:form action="/register" modelAttribute="user" method="post" >
                         <form:input type="email" placeholder="Email Address" path="email"/>
                         <form:input type="password" placeholder="Password" path="password"/>
-                        <input type="submit" value="Dang ky" />
-                    <c:if test="${not empty result}" var="false">Email da duoc su dung</c:if>
+                        <input type="submit" value="Đăng ký" />
+                    <c:if test="${not empty result}" var="false">Email đã được sử dụng</c:if>
                     <c:if test="${not empty notice}">${notice}</c:if>
                     </form:form>
                 </div><!--/sign up form-->
