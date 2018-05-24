@@ -1,16 +1,25 @@
 package spring.web.service;
 
+import com.mongodb.Mongo;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import spring.web.entity.HinhAnh;
 import spring.web.entity.HoSoTaiKhoan;
+import spring.web.entity.TaiKhoan;
 import spring.web.repo.HoSoTaiKhoanRepository;
 
 @Service
 public class HoSoTaiKhoanService implements IHoSoTaiKhoanService {
     @Autowired
     HoSoTaiKhoanRepository hoSoTaiKhoanRepository;
+    @Autowired
+    @Qualifier(value = "mongoTemplate")
+    MongoTemplate mongoTemplate;
 
     @Override
     public HoSoTaiKhoan getHoSoTaiKhoanById(ObjectId id) {
@@ -35,6 +44,33 @@ public class HoSoTaiKhoanService implements IHoSoTaiKhoanService {
 
         }
         return hoSoTaiKhoan;
+    }
+
+    @Override
+    public HoSoTaiKhoan getHoSoTaiKhoan(Query query) {
+        HoSoTaiKhoan hoSoTaiKhoan= null;
+        try{
+            hoSoTaiKhoan=mongoTemplate.findOne(query,HoSoTaiKhoan.class);
+            return hoSoTaiKhoan;
+
+        }
+        catch (Exception e){
+
+
+        }
+        return hoSoTaiKhoan;
+
+    }
+
+    @Override
+    public boolean updateHoSoTaiKhoan(Query query, Update update) {
+        try {
+            mongoTemplate.findAndModify(query,update,HoSoTaiKhoan.class);
+            return true;
+        } catch (Exception e) {
+
+        }
+        return false;
     }
 
     @Override
@@ -104,4 +140,6 @@ public class HoSoTaiKhoanService implements IHoSoTaiKhoanService {
         }
         return false;
     }
+
+
 }

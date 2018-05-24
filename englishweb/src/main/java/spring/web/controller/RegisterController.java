@@ -18,20 +18,29 @@ import spring.web.repo.CountryRepo;
 
 import spring.web.repo.LanguageRepo;
 import spring.web.repo.TaiKhoanRepo;
+import spring.web.service.HoSoTaiKhoanService;
 import spring.web.service.TaiKhoanService;
 
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Controller
 public class RegisterController {
     @Autowired
     TaiKhoanService taiKhoanService;
+    @Autowired
+    HoSoTaiKhoanService hoSoTaiKhoanService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@ModelAttribute("user") TaiKhoan taiKhoan, Model model, HttpServletRequest request) {
         SendMail sendMail = new SendMail();
+        HoSoTaiKhoan hoSoTaiKhoan= new HoSoTaiKhoan();
         String verifyCode = sendMail.generateRandomString(30);
         Mail mail = new VerifyMail(taiKhoan.getEmail(), verifyCode);
         if (taiKhoanService.getTaiKhoanByEmail(taiKhoan.getEmail()) != null) {
@@ -42,14 +51,30 @@ public class RegisterController {
             TrangThai trangThai = new TrangThai(1, false, false);
             taiKhoan.setTrangThai(trangThai);
             taiKhoan.setMaXacThucMail(verifyCode);
+            taiKhoan.setThoiGianTao(new Date());
             String MD5Hash = DigestUtils.md5Hex(taiKhoan.getPassword());
             taiKhoan.setPassword(MD5Hash);
             taiKhoanService.addTaiKhoan(taiKhoan);
+            hoSoTaiKhoan.setEmail(taiKhoan.getEmail());
+            hoSoTaiKhoan.setTenHienThi(getNameFromEmail(taiKhoan.getEmail()));
+            hoSoTaiKhoanService.addHoSoTaiKhoan(hoSoTaiKhoan);
             model.addAttribute("notice", "Đăng ký thành công, hãy đăng nhập để sử dụng!");
             return "login";
         }
         model.addAttribute("notice", "Đăng ký không thành công, xin vui lòng thử lại.");
         return "register";
+    }
+    public String getNameFromEmail(String email){
+        int position=0;
+        StringBuilder string= new StringBuilder(email);
+        for(int i=0;i<email.length();i++){
+            char s=email.charAt(i);
+            if(Character.toString(s).equals("@")){
+                position=i;
+            }
+
+        }
+        return string.substring(0,position);
     }
     @RequestMapping(value = "/active")
     public String activeAccount(@RequestParam("code") String code) {

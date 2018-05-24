@@ -31,7 +31,7 @@ public class CustomerUserDetailsService implements UserDetailsService {
         boolean accountNonLocked = true;
         TaiKhoan taiKhoan= taiKhoanService.getTaiKhoanByEmail(email);
         try {
-            userDetails = new User(taiKhoan.getEmail(), taiKhoan.getPassword(),enabled,accountNonExpired,credentialsNonExpired,accountNonLocked,getAuthorities(taiKhoan.getTrangThai().getRole()));
+            userDetails = new User(taiKhoan.getEmail(), taiKhoan.getPassword(),taiKhoan.getTrangThai().isVerified(),accountNonExpired,credentialsNonExpired,taiKhoan.getTrangThai().isActive(),getAuthorities(taiKhoan.getTrangThai().getRole()));
         }
          catch (Exception e){
              System.out.println(e);

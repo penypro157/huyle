@@ -21,6 +21,7 @@ import java.util.List;
 public class HoSoTaiKhoan {
     @Id
     private ObjectId id;
+    @Field("tenhienthi")
     private String tenHienThi;
     @Indexed(unique = true)
     @Field("email")
@@ -29,6 +30,8 @@ public class HoSoTaiKhoan {
     private String ho;
     @Field("ten")
     private String ten;
+    @Field("sodienthoai")
+    private String sodienthoai;
     @Field("gioitinh")
     private Boolean gioiTinh;
     @Field("anhdaidien")
@@ -45,7 +48,7 @@ public class HoSoTaiKhoan {
 
     }
 
-    public HoSoTaiKhoan(ObjectId id, String tenHienThi, String email, String ho, String ten, Boolean gioiTinh, HinhAnh anhDaiDien, HinhAnh anhBia, ArrayList<BanBe> dsBanBe, ArrayList<HinhAnh> dsHinhAnh,NoiSong noiSong) {
+    public HoSoTaiKhoan(ObjectId id, String tenHienThi, String email, String ho, String ten, String sodienthoai,Boolean gioiTinh, HinhAnh anhDaiDien, HinhAnh anhBia, ArrayList<BanBe> dsBanBe, ArrayList<HinhAnh> dsHinhAnh,NoiSong noiSong) {
         this.id = id;
         this.tenHienThi = tenHienThi;
         this.email = email;
@@ -57,6 +60,15 @@ public class HoSoTaiKhoan {
         this.dsBanBe = dsBanBe;
         this.dsHinhAnh = dsHinhAnh;
         this.noiSong=noiSong;
+        this.sodienthoai=sodienthoai;
+    }
+
+    public String getSodienthoai() {
+        return sodienthoai;
+    }
+
+    public void setSodienthoai(String sodienthoai) {
+        this.sodienthoai = sodienthoai;
     }
 
     public ObjectId getId() {

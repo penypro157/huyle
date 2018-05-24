@@ -67,8 +67,8 @@
                 <div class="signup-form"><!--sign up form-->
                     <h2>Đăng ký tài khoản</h2>
                     <form:form action="/register" modelAttribute="user" method="post" >
-                        <form:input type="email" placeholder="Email Address" path="email"/>
-                        <form:input type="password" placeholder="Password" path="password"/>
+                        <form:input type="email" placeholder="Địa chỉ email" path="email"/>
+                        <form:input type="password" placeholder="Mật khẩu" path="password"/>
                         <input type="submit" value="Đăng ký" />
                     <c:if test="${not empty result}" var="false">Email đã được sử dụng</c:if>
                     <c:if test="${not empty notice}">${notice}</c:if>
