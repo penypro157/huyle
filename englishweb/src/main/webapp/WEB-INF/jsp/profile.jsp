@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -119,6 +120,17 @@
                                        title="enter a location">
                             </div>
                         </div>
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label><h4>Ngày sinh</h4></label>
+                                <fmt:formatDate value="${hosotaikhoan.ngaySinh}" pattern="YYYY-MM-dd" var="ngaysinh"/>
+                                <input type="date" class="form-control" id="dateofbirth" name="ngaySinh"
+                                   value="${ngaysinh}" />
+                                <h1>   </h1>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-md-6">
                                 <label><h4>Giới tính</h4></label></br>
@@ -153,32 +165,32 @@
                     <h2></h2>
 
                     <hr>
-                    <form class="form" action="##" method="post" id="registrationForm">
+                    <form class="form" action="/changepassword" method="post" id="changepasswordform">
                         <div class="form-group">
 
                             <div class="col-xs-6">
                                 <label for="email"><h4>Mật khẩu cũ</h4></label>
-                                <input type="email" class="form-control">
+                                <input type="password" class="form-control" name="matkhaucu">
                             </div>
                         </div>
                         <div class="form-group">
 
                             <div class="col-xs-6">
                                 <label><h4>Mật khẩu mới</h4></label>
-                                <input type="password" class="form-control" name="password">
+                                <input type="password" class="form-control" name="matkhaumoi">
                             </div>
                         </div>
                         <div class="form-group">
 
                             <div class="col-xs-6">
                                 <label><h4>Nhập lại mật khẩu</h4></label>
-                                <input type="password" class="form-control" name="repassword">
+                                <input type="password" class="form-control" name="matkhaumoi1">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <br>
-                                <button class="btn btn-lg btn-success" type="submit"><i
+                                <button class="btn btn-lg btn-success" type="submit" ><i
                                         class="glyphicon glyphicon-ok-sign"></i> Save
                                 </button>
                                 <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset

@@ -13,5 +13,6 @@ public interface ITaiKhoanService {
     boolean addTaiKhoan(TaiKhoan taiKhoan);
     boolean deleteTaiKhoan(TaiKhoan taiKhoan);
     boolean updateTaiKhoan(Query query, Update update);
+    boolean exist(Query query);
 
 }

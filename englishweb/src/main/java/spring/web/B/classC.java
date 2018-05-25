@@ -4,6 +4,10 @@ import spring.web.beans.Mail;
 import spring.web.beans.SendMail;
 import spring.web.beans.VerifyMail;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class classC  {
@@ -34,14 +38,11 @@ public class classC  {
     }
 
     public static void main(String[] args) {
-        int j=0;
-        j=get();
-        System.out.println(j);
+        Date date =new Date();
+        System.out.println(date.toString());
+        String s= new SimpleDateFormat("dd-MM-yyyy").format(date);
+        System.out.println(s);
 
     }
-    public static int get(){
-        int i=9;
 
-        return i;
-    }
 }

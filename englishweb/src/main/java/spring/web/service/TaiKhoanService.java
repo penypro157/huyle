@@ -95,6 +95,19 @@ public class TaiKhoanService implements ITaiKhoanService {
 
     }
 
+    @Override
+    public boolean exist(Query query) {
+        try{
+    mongoTemplate.exists(query,TaiKhoan.class);
+    return true;
+
+        }
+        catch (Exception e){
+
+        }
+        return false;
+    }
+
 
 }
 

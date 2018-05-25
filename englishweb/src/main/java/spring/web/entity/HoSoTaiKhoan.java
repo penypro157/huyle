@@ -8,11 +8,16 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +35,8 @@ public class HoSoTaiKhoan {
     private String ho;
     @Field("ten")
     private String ten;
+    @Field("ngaysinh")
+    private Date ngaySinh;
     @Field("sodienthoai")
     private String sodienthoai;
     @Field("gioitinh")
@@ -48,7 +55,7 @@ public class HoSoTaiKhoan {
 
     }
 
-    public HoSoTaiKhoan(ObjectId id, String tenHienThi, String email, String ho, String ten, String sodienthoai,Boolean gioiTinh, HinhAnh anhDaiDien, HinhAnh anhBia, ArrayList<BanBe> dsBanBe, ArrayList<HinhAnh> dsHinhAnh,NoiSong noiSong) {
+    public HoSoTaiKhoan(ObjectId id, String tenHienThi, String email, String ho, String ten, Date ngaySinh, String sodienthoai,Boolean gioiTinh, HinhAnh anhDaiDien, HinhAnh anhBia, ArrayList<BanBe> dsBanBe, ArrayList<HinhAnh> dsHinhAnh,NoiSong noiSong) {
         this.id = id;
         this.tenHienThi = tenHienThi;
         this.email = email;
@@ -61,8 +68,16 @@ public class HoSoTaiKhoan {
         this.dsHinhAnh = dsHinhAnh;
         this.noiSong=noiSong;
         this.sodienthoai=sodienthoai;
+        this.ngaySinh= ngaySinh;
     }
 
+    public Date getNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
     public String getSodienthoai() {
         return sodienthoai;
     }

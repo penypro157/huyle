@@ -35,6 +35,7 @@ public class ProfileController {
                 hoSoTaiKhoan = hoSoTaiKhoanService.getHoSoTaiKhoan(query);
                 System.out.println(hoSoTaiKhoan.getGioiTinh());
                 model.addAttribute("hosotaikhoan", hoSoTaiKhoan);
+                System.out.println(hoSoTaiKhoan.getNgaySinh());
                 return "profile";
 
             } catch (Exception e) {
@@ -72,6 +73,7 @@ public class ProfileController {
             update.set("ho", hoSoTaiKhoan.getHo());
             update.set("sodienthoai", hoSoTaiKhoan.getSodienthoai());
             update.set("gioitinh", hoSoTaiKhoan.getGioiTinh());
+            update.set("ngaysinh",hoSoTaiKhoan.getNgaySinh());
             return update;
         } catch (Exception e) {
         }
