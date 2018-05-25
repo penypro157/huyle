@@ -17,7 +17,9 @@ import spring.web.service.HoSoTaiKhoanService;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Controller
@@ -90,8 +92,10 @@ public class ProfileController {
     public String setImage(@RequestParam("file") MultipartFile file){
     if(!file.isEmpty()){
         try {
-            BufferedImage image=ImageIO.read((File) file);
-            ImageIO.write(image,"png",new File("image1.png"));
+            BufferedImage image=ImageIO.read(convertToFile(file));
+            if
+                    (!ImageIO.write(image,"jpg",new File("../webapp/resources/image/anhdaidien/anh1.jpg"))) System.out.println("loi roi");
+            System.out.println(convertToFile(file).getPath());
             System.out.println("thanh cong");
         } catch (IOException e) {
             System.out.println("Loi comnr");
@@ -100,7 +104,17 @@ public class ProfileController {
 
     }
 
+
 return "404";
+    }
+    public File convertToFile(MultipartFile multipartFile) throws IOException {
+        File convFile = new File(multipartFile.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(multipartFile.getBytes());
+        fos.close();
+        return convFile;
+
     }
 
 }
