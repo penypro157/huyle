@@ -39,7 +39,10 @@
             <div class="text-center">
                 <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail"
                      alt="avatar">
-                <input type="file" class="text-center center-block file-upload">
+                <form id="upload-avatar"  action="/uploadimage" method="POST">
+                <input type="file" class="text-center center-block file-upload" name="file" id="fileimage-avatar">
+                    <input type="submit" value="chọn ảnh" />
+                </form>
             </div>
             </hr><br>
 

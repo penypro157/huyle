@@ -9,11 +9,16 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import spring.web.beans.IAuthentication;
 import spring.web.entity.HoSoTaiKhoan;
 import spring.web.service.HoSoTaiKhoanService;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 @Controller
 public class ProfileController {
@@ -80,6 +85,22 @@ public class ProfileController {
 
 
         return update;
+    }
+    @RequestMapping(value = "/uploadimage", method = RequestMethod.POST)
+    public String setImage(@RequestParam("file") MultipartFile file){
+    if(!file.isEmpty()){
+        try {
+            BufferedImage image=ImageIO.read((File) file);
+            ImageIO.write(image,"png",new File("image1.png"));
+            System.out.println("thanh cong");
+        } catch (IOException e) {
+            System.out.println("Loi comnr");
+
+        }
+
+    }
+
+return "404";
     }
 
 }

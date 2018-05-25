@@ -33,11 +33,14 @@ $('#updateinfo').submit(function(e) {
         var matkhaumoi1=$(' input[name="matkhaumoi1"]').val();
         if(matkhaumoi!=matkhaumoi1){
             e.preventDefault();
-            alert('Nhập lại mật khẩu bị sai, hoặc có lỗi xảy ra')
+            alert('Nhập lại mật khẩu bị sai, hoặc có lỗi xảy ra !!')
         }
     });
 
-
+    function submitImage() {
+        var data= $()
+        
+    }
 
 
 })
