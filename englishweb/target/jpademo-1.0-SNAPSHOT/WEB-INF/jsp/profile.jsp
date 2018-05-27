@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -37,13 +37,28 @@
 
 
             <div class="text-center">
-                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail"
+                <img src="/resources/image/hinhdaidien/${hosotaikhoan.anhDaiDien.duongDan}" id="avatar"
+                     style="max-height: 100% ; max-width: 100%"
+                     class="avatar img-rounded img-thumbnail"
                      alt="avatar">
-                <form id="upload-avatar"  action="/uploadimage" method="POST" enctype="multipart/form-data">
-                <input type="file" class="text-center center-block file-upload" name="file" id="fileimage-avatar">
-                    <input type="submit" value="chọn ảnh" />
+
+
+                <form id="upload-avatar" action="/uploadimage" method="POST" enctype="multipart/form-data">
+                    <input type="file" class="text-center center-block file-upload" name="file" id="fileimage-avatar" hidden >
+                    <input type="button" value="Đổi ảnh đại diện" onclick="openFile()"/>
+                    <script>
+                        function openFile() {
+                            $('#fileimage-avatar').click();
+                        }
+
+                    </script>
+
                 </form>
             </div>
+            <!-- Bootstrap Progress bar -->
+
+            <!-- Alert -->
+            <div id="alertMsg" style="color: red;font-size: 18px;"></div>
             </hr><br>
 
 
@@ -130,8 +145,8 @@
                                 <label><h4>Ngày sinh</h4></label>
                                 <fmt:formatDate value="${hosotaikhoan.ngaySinh}" pattern="YYYY-MM-dd" var="ngaysinh"/>
                                 <input type="date" class="form-control" id="dateofbirth" name="ngaySinh"
-                                   value="${ngaysinh}" />
-                                <h1>   </h1>
+                                       value="${ngaysinh}"/>
+                                <h1></h1>
                             </div>
                         </div>
                         <div class="form-group">
@@ -155,7 +170,7 @@
                                 <button class="btn btn-lg btn-success" type="submit"><i
                                         class="glyphicon glyphicon-ok-sign"></i> Save
                                 </button>
-                                <h1 id="status-updateinfo" > </h1>
+                                <h1 id="status-updateinfo"></h1>
                             </div>
                         </div>
                     </form:form>
@@ -193,7 +208,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <br>
-                                <button class="btn btn-lg btn-success" type="submit" ><i
+                                <button class="btn btn-lg btn-success" type="submit"><i
                                         class="glyphicon glyphicon-ok-sign"></i> Save
                                 </button>
                                 <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset
@@ -209,7 +224,6 @@
 
     </div><!--/col-9-->
 </div><!--/row-->
-<script src="/resources/js/profile-uploadfile.js"></script>
 <script src="/resources/js/update-profile.js"></script>
 </body>
 </html>

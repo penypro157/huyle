@@ -1,6 +1,7 @@
 package spring.web.controller;
 
 import com.sun.net.httpserver.HttpServer;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.web.beans.IAuthentication;
+import spring.web.beans.ImageHandler;
+import spring.web.entity.HinhAnh;
 import spring.web.entity.HoSoTaiKhoan;
 import spring.web.service.HoSoTaiKhoanService;
 
@@ -21,6 +24,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 @Controller
 public class ProfileController {
@@ -59,7 +63,6 @@ public class ProfileController {
         Query query = new Query();
         query.addCriteria(Criteria.where("email").is(email));
         Update update = getUpdate(hoSoTaiKhoan);
-        System.out.println(update.getUpdateObject().toString());
         try {
             hoSoTaiKhoanService.updateHoSoTaiKhoan(query, update);
 
@@ -80,7 +83,7 @@ public class ProfileController {
             update.set("ho", hoSoTaiKhoan.getHo());
             update.set("sodienthoai", hoSoTaiKhoan.getSodienthoai());
             update.set("gioitinh", hoSoTaiKhoan.getGioiTinh());
-            update.set("ngaysinh",hoSoTaiKhoan.getNgaySinh());
+            update.set("ngaysinh", hoSoTaiKhoan.getNgaySinh());
             return update;
         } catch (Exception e) {
         }
@@ -88,25 +91,78 @@ public class ProfileController {
 
         return update;
     }
+
     @RequestMapping(value = "/uploadimage", method = RequestMethod.POST)
-    public String setImage(@RequestParam("file") MultipartFile file){
-    if(!file.isEmpty()){
+    public @ResponseBody
+    String setImage(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        String email = authentication.getAuthentication().getName();
+        String rootPath = request.getServletContext().getRealPath("");
+        String uploadFolder = "\\resources\\image\\hinhdaidien\\";
+        File imageFile = null;
         try {
-            BufferedImage image=ImageIO.read(convertToFile(file));
-            if
-                    (!ImageIO.write(image,"jpg",new File("../webapp/resources/image/anhdaidien/anh1.jpg"))) System.out.println("loi roi");
-            System.out.println(convertToFile(file).getPath());
-            System.out.println("thanh cong");
+            imageFile = convertToFile(file);
         } catch (IOException e) {
-            System.out.println("Loi comnr");
+            e.printStackTrace();
+        }
+        String formatName = ImageHandler.getFormatName(imageFile);
+        if (!file.isEmpty()) {
+            try {
+                BufferedImage image = ImageIO.read(imageFile);
+                String imageName = new ObjectId().toString() + "." + formatName;
+                if (ImageIO.write(image, formatName, new File(rootPath + uploadFolder + imageName))) {
+                    deleteImage(rootPath,uploadFolder);
+                        if (setHinhAnh(email, imageName)) {
+
+                            return imageName;
+                        }
+                    }
+
+
+            } catch (IOException e) {
+
+            }
 
         }
 
+
+        return "";
     }
 
+    public boolean deleteImage(String roothPath,String uploadFolder) {
+        String email = authentication.getAuthentication().getName();
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is(email));
+        query.fields().include("anhdaidien.duongDan");
+        HoSoTaiKhoan hoSoTaiKhoan = hoSoTaiKhoanService.getHoSoTaiKhoan(query);
+        try {
+            String tenAnh = hoSoTaiKhoan.getAnhDaiDien().getDuongDan();
+            System.out.println(tenAnh);
+            if (ImageHandler.deleteImage(roothPath,uploadFolder, tenAnh))
+                return true;
 
-return "404";
+        } catch (Exception e) {
+
+        }
+        return false;
     }
+
+    public boolean setHinhAnh(String email, String tenhinhanh) {
+        HinhAnh hinhAnh = new HinhAnh(tenhinhanh, new Date(), 0);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is(email));
+        Update update = new Update();
+        try {
+            update.set("anhdaidien", hinhAnh);
+            hoSoTaiKhoanService.updateHoSoTaiKhoan(query, update);
+            return true;
+        } catch (Exception e) {
+
+        }
+
+        return false;
+
+    }
+
     public File convertToFile(MultipartFile multipartFile) throws IOException {
         File convFile = new File(multipartFile.getOriginalFilename());
         convFile.createNewFile();

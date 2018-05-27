@@ -13,7 +13,6 @@ import spring.web.repo.CountryRepo;
 import spring.web.repo.LanguageRepo;
 
 import java.util.ArrayList;
-
 @Controller
 public class LoginController {
     @Autowired
