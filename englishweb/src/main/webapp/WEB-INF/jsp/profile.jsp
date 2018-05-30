@@ -44,7 +44,8 @@
 
 
                 <form id="upload-avatar" action="/uploadimage" method="POST" enctype="multipart/form-data">
-                    <input type="file" class="text-center center-block file-upload" name="file" id="fileimage-avatar" hidden >
+                    <input type="file" class="text-center center-block file-upload" name="file" id="fileimage-avatar"
+                           hidden>
                     <input type="button" value="Đổi ảnh đại diện" onclick="openFile()"/>
                     <script>
                         function openFile() {
@@ -76,7 +77,6 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#home">Profile</a></li>
                 <li><a data-toggle="tab" href="#messages">Change Password</a></li>
-                <li><a data-toggle="tab" href="#settings">Menu 2</a></li>
             </ul>
 
 
@@ -134,11 +134,51 @@
 
                             <div class="col-xs-6">
                                 <label><h4>Nơi sống</h4></label>
-                                <input type="email" class="form-control" id="location"
-                                       title="enter a location">
+                                <input type="text" placeholder="Nơi sống" class="form-control"  readonly="readonly" value="<c:if
+                                        test="${(hosotaikhoan.noiSong.tentinhthanh != null)&&(hosotaikhoan.noiSong.quanhuyen.tenquanhuyen != null)}">${hosotaikhoan.noiSong.quanhuyen.tenquanhuyen} - ${hosotaikhoan.noiSong.tentinhthanh} </c:if>"/>
+                                <button type="button" class="btn btn-info btn-group-lg" data-toggle="modal"
+                                        data-target="#myModal">Thay đổi nơi sống
+                                </button>
+
                             </div>
+
+
                         </div>
 
+
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <label>Chọn Nơi Sống</label>
+                                    </div>
+                                    <div class="modal-body">
+                                        <select id='tinhthanh' class="form-control form-control-lg">
+                                            <option value="${hosotaikhoan.noiSong.tentinhthanh}"
+                                                    selected>${hosotaikhoan.noiSong.tentinhthanh}</option>
+                                            <c:forEach items="${tinhthanh}" var="tinh">
+                                                <c:if test="${tinh.tenTinhThanh != hosotaikhoan.noiSong.tentinhthanh}">
+                                                    <option value="${tinh.tenTinhThanh}">${tinh.tenTinhThanh}</option>
+                                                </c:if>
+                                            </c:forEach>
+                                        </select>
+                                        <select id='quanhuyen' class="form-control form-control-lg">
+                                            <option value="${hosotaikhoan.noiSong.quanhuyen.tenquanhuyen}"
+                                                    selected>${hosotaikhoan.noiSong.quanhuyen.tenquanhuyen}</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default " data-dismiss="modal">Close
+                                        </button>
+                                        <button type="button" class="btn  btn-block" onclick="choiceaddress()">Chọn
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
 
                             <div class="col-xs-6">
@@ -225,5 +265,6 @@
     </div><!--/col-9-->
 </div><!--/row-->
 <script src="/resources/js/update-profile.js"></script>
+<script src="/resources/js/tinhthanh-profile.js"></script>
 </body>
 </html>

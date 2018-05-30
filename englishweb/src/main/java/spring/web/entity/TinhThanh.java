@@ -2,30 +2,38 @@ package spring.web.entity;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.ArrayList;
 
-@Document
+@Document(collection = "tinhthanh")
 public class TinhThanh {
     @Id
-    private ObjectId id;
+    private ObjectId _id;
     @Field("matinhthanh")
-    @Indexed(unique = true)
     private String maTinhThanh;
     @Field("tentinhthanh")
     private String tenTinhThanh;
     @Field("quanhuyen")
-    private ArrayList<QuanHuyen> dsQuanHuyen;
+    private ArrayList<QuanHuyen> QuanHuyen;
 
-    public ObjectId getId() {
-        return id;
+    public TinhThanh(ObjectId _id, String id, String maTinhThanh, String tenTinhThanh, ArrayList<QuanHuyen> QuanHuyen) {
+        this._id = _id;
+        this.maTinhThanh = maTinhThanh;
+        this.tenTinhThanh = tenTinhThanh;
+        this.QuanHuyen = QuanHuyen;
     }
 
-    public void setId(ObjectId id) {
-        this.id = id;
+    public TinhThanh() {
+    }
+
+    public ObjectId get_id() {
+        return _id;
+    }
+
+    public void set_id(ObjectId _id) {
+        this._id = _id;
     }
 
     public String getMaTinhThanh() {
@@ -44,11 +52,11 @@ public class TinhThanh {
         this.tenTinhThanh = tenTinhThanh;
     }
 
-    public ArrayList<QuanHuyen> getDsQuanHuyen() {
-        return dsQuanHuyen;
+    public ArrayList<QuanHuyen> getQuanHuyen() {
+        return QuanHuyen;
     }
 
-    public void setDsQuanHuyen(ArrayList<QuanHuyen> dsQuanHuyen) {
-        this.dsQuanHuyen = dsQuanHuyen;
+    public void setQuanHuyen(ArrayList<QuanHuyen> QuanHuyen) {
+        this.QuanHuyen = QuanHuyen;
     }
 }

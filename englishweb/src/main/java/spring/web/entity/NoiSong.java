@@ -1,30 +1,40 @@
 package spring.web.entity;
 
 public class NoiSong {
-    private String tenTinhThanh;
-    private String tenQuanHuyen;
+    private String tentinhthanh;
+    private String matinhthanh;
+    private QuanHuyen quanhuyen;
 
-    public NoiSong(String tenTinhThanh, String tenQuanHuyen) {
-        this.tenTinhThanh = tenTinhThanh;
-        this.tenQuanHuyen = tenQuanHuyen;
+    public NoiSong(String tentinhthanh, String matinhthanh, QuanHuyen quanhuyen) {
+        this.tentinhthanh = tentinhthanh;
+        this.matinhthanh = matinhthanh;
+        this.quanhuyen = quanhuyen;
     }
 
     public NoiSong() {
     }
 
-    public String getTenTinhThanh() {
-        return tenTinhThanh;
+    public String getTentinhthanh() {
+        return tentinhthanh;
     }
 
-    public void setTenTinhThanh(String tenTinhThanh) {
-        this.tenTinhThanh = tenTinhThanh;
+    public void setTentinhthanh(String tentinhthanh) {
+        this.tentinhthanh = tentinhthanh;
     }
 
-    public String getTenQuanHuyen() {
-        return tenQuanHuyen;
+    public String getMatinhthanh() {
+        return matinhthanh;
     }
 
-    public void setTenQuanHuyen(String tenQuanHuyen) {
-        this.tenQuanHuyen = tenQuanHuyen;
+    public void setMatinhthanh(String matinhthanh) {
+        this.matinhthanh = matinhthanh;
+    }
+
+    public QuanHuyen getQuanhuyen() {
+        return quanhuyen;
+    }
+
+    public void setQuanhuyen(QuanHuyen quanhuyen) {
+        this.quanhuyen = quanhuyen;
     }
 }

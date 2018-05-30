@@ -63,7 +63,7 @@ $('#updateinfo').submit(function(e) {
             processData: false,
         }).done(function (data) {
             if(data!="") {
-                $('#avatar').attr("src","/resources/image/"+data);
+                $('#avatar').attr("src","/resources/image/hinhdaidien/"+data);
                 $('#alertMsg').text("Đã thay đổi ảnh đại diện");
                 setTimeout(function () {
                     $('#alertMsg').text('');

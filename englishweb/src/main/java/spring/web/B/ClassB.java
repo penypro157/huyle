@@ -1,6 +1,7 @@
 package spring.web.B;
 
-public interface ClassB {
+public class ClassB {
+    public static void main(String[] args) {
 
-    void b();
+    }
 }

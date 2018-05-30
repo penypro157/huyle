@@ -1,9 +1,7 @@
 package spring.web.controller;
 
-import com.sun.net.httpserver.HttpServer;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -13,18 +11,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.web.beans.IAuthentication;
 import spring.web.beans.ImageHandler;
-import spring.web.entity.HinhAnh;
-import spring.web.entity.HoSoTaiKhoan;
+import spring.web.entity.*;
 import spring.web.service.HoSoTaiKhoanService;
+import spring.web.service.TinhThanhService;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.System;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -32,10 +32,13 @@ public class ProfileController {
     IAuthentication authentication;
     @Autowired
     HoSoTaiKhoanService hoSoTaiKhoanService;
+    @Autowired
+    TinhThanhService tinhThanhService;
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String getProfilePage(Model model) {
         HoSoTaiKhoan hoSoTaiKhoan = null;
+        List<TinhThanh> tinhThanhs = null;
         String email = authentication.getAuthentication().getName();
         if (email != null)
             try {
@@ -45,7 +48,9 @@ public class ProfileController {
                 query.fields().exclude("hinhanh");
                 hoSoTaiKhoan = hoSoTaiKhoanService.getHoSoTaiKhoan(query);
                 System.out.println(hoSoTaiKhoan.getGioiTinh());
+                tinhThanhs = tinhThanhService.getAllTinhThanh();
                 model.addAttribute("hosotaikhoan", hoSoTaiKhoan);
+                model.addAttribute("tinhthanh", tinhThanhs);
                 System.out.println(hoSoTaiKhoan.getNgaySinh());
                 return "profile";
 
@@ -84,6 +89,7 @@ public class ProfileController {
             update.set("sodienthoai", hoSoTaiKhoan.getSodienthoai());
             update.set("gioitinh", hoSoTaiKhoan.getGioiTinh());
             update.set("ngaysinh", hoSoTaiKhoan.getNgaySinh());
+            update.set("noisong", hoSoTaiKhoan.getNoiSong());
             return update;
         } catch (Exception e) {
         }
@@ -110,12 +116,12 @@ public class ProfileController {
                 BufferedImage image = ImageIO.read(imageFile);
                 String imageName = new ObjectId().toString() + "." + formatName;
                 if (ImageIO.write(image, formatName, new File(rootPath + uploadFolder + imageName))) {
-                    deleteImage(rootPath,uploadFolder);
-                        if (setHinhAnh(email, imageName)) {
+                    deleteImage(rootPath, uploadFolder);
+                    if (setHinhAnh(email, imageName)) {
 
-                            return imageName;
-                        }
+                        return imageName;
                     }
+                }
 
 
             } catch (IOException e) {
@@ -128,7 +134,7 @@ public class ProfileController {
         return "";
     }
 
-    public boolean deleteImage(String roothPath,String uploadFolder) {
+    public boolean deleteImage(String roothPath, String uploadFolder) {
         String email = authentication.getAuthentication().getName();
         Query query = new Query();
         query.addCriteria(Criteria.where("email").is(email));
@@ -137,7 +143,7 @@ public class ProfileController {
         try {
             String tenAnh = hoSoTaiKhoan.getAnhDaiDien().getDuongDan();
             System.out.println(tenAnh);
-            if (ImageHandler.deleteImage(roothPath,uploadFolder, tenAnh))
+            if (ImageHandler.deleteImage(roothPath, uploadFolder, tenAnh))
                 return true;
 
         } catch (Exception e) {
@@ -172,5 +178,43 @@ public class ProfileController {
         return convFile;
 
     }
+
+    @RequestMapping(value = "/tinhthanh", method = RequestMethod.GET)
+    public @ResponseBody
+    List<QuanHuyen> getQuanHuyen(@RequestParam("tentinhthanh") String tentinhthanh) {
+        List<QuanHuyen> quanHuyenList = null;
+        try {
+            quanHuyenList = tinhThanhService.getQuanHuyenByTenTinhThanh(tentinhthanh);
+            return quanHuyenList;
+
+        } catch (Exception e) {
+
+        }
+        return quanHuyenList;
+
+
+    }
+
+    @RequestMapping(value = "/noisong", method = RequestMethod.GET)
+    public @ResponseBody boolean saveNoiSong(@RequestParam("tentinhthanh") String tentinhthanh, @RequestParam("tenquanhuyen") String tenquanhuyen) {
+        String email = authentication.getAuthentication().getName();
+        QuanHuyen quanHuyen = new QuanHuyen();
+
+        NoiSong noiSong = new NoiSong();
+        quanHuyen.setTenquanhuyen(tenquanhuyen);
+        noiSong.setTentinhthanh(tentinhthanh);
+        noiSong.setQuanhuyen(quanHuyen);
+        try {
+
+            if (tinhThanhService.updateNoiSong(email, noiSong)) {
+                System.out.println("thành công");return true;}
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        System.out.println("thất bại");
+        return false;
+    }
+
 
 }

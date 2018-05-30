@@ -1,30 +1,25 @@
 package spring.web.entity;
 
-public class QuanHuyen {
-    private String maQuanHuyen;
-    private String tenQuanHuyen;
+import java.util.ArrayList;
 
-    public QuanHuyen(String maQuanHuyen, String tenQuanHuyen) {
-        this.maQuanHuyen = maQuanHuyen;
-        this.tenQuanHuyen = tenQuanHuyen;
+public class QuanHuyen {
+
+    private String tenquanhuyen;
+
+
+    public QuanHuyen(String tenquanhuyen) {
+        this.tenquanhuyen = tenquanhuyen;
     }
 
     public QuanHuyen() {
     }
 
-    public String getMaQuanHuyen() {
-        return maQuanHuyen;
+    public String getTenquanhuyen() {
+        return tenquanhuyen;
     }
 
-    public void setMaQuanHuyen(String maQuanHuyen) {
-        this.maQuanHuyen = maQuanHuyen;
+    public void setTenquanhuyen(String tenquanhuyen) {
+        this.tenquanhuyen = tenquanhuyen;
     }
 
-    public String getTenQuanHuyen() {
-        return tenQuanHuyen;
-    }
-
-    public void setTenQuanHuyen(String tenQuanHuyen) {
-        this.tenQuanHuyen = tenQuanHuyen;
-    }
 }
