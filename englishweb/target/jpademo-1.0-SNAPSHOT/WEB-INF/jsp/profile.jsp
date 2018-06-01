@@ -19,19 +19,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/statusbox.css">
+    <link rel="stylesheet" href="/resources/css/profile-css.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <hr>
-<div class="container bootstrap snippet">
+<div class="container-fluid bootstrap snippet header">
     <div class="row">
-        <div class="col-sm-10"><h1>User name</h1></div>
-        <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image"
-                                                                       class="img-circle img-responsive"
-                                                                       src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a>
+        <div class="col-sm-2"><a href="/users" class="pull-right symbol"><img title="profile image"
+                                                                              class="img-circle img-responsive"
+                                                                              src="/resources/image/symbol.png"></a>
+        </div>
+        <div class="col-sm-10">
+            <a href="/profile"><h1>${hosotaikhoan.tenHienThi}</h1>
+            </a>
+
         </div>
     </div>
+    <br>
+</div>
+
+<div class="container bootstrap snippet">
     <div class="row">
         <div class="col-sm-3"><!--left col-->
 
@@ -44,7 +54,8 @@
 
 
                 <form id="upload-avatar" action="/uploadimage" method="POST" enctype="multipart/form-data">
-                    <input type="file" class="text-center center-block file-upload" name="file" id="fileimage-avatar"
+                    <input type="file" class="text-center center-block file-upload" name="avatar-file"
+                           id="fileimage-avatar"
                            hidden>
                     <input type="button" value="Đổi ảnh đại diện" onclick="openFile()"/>
                     <script>
@@ -75,13 +86,44 @@
         </div><!--/col-3-->
         <div class="col-sm-9">
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#home">Profile</a></li>
+                <li><a data-toggle="tab" href="#home">Home</a></li>
+                <li><a data-toggle="tab" href="#profile">Profile </a></li>
                 <li><a data-toggle="tab" href="#messages">Change Password</a></li>
             </ul>
 
 
             <div class="tab-content">
+
                 <div class="tab-pane active" id="home">
+                    <div class="col-md-6">
+                        <div class="widget-area no-padding blank">
+                            <div class="status-upload">
+                                <form>
+                                    <textarea placeholder="What are you doing right now?"></textarea>
+                                    <input type="file" multiple name="imagefile" hidden="hidden" id="upload-image">
+                                    <ul>
+                                        <li>
+                                            <button type="button" class="btn-info" onclick="uploadimage()">Thêm ảnh
+                                            </button>
+                                        </li>
+                                        <script>
+                                            function uploadimage() {
+                                                $('#upload-image').click();
+                                            }
+                                        </script>
+                                    </ul>
+                                    <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i>
+                                        Post
+                                    </button>
+                                </form>
+                            </div><!-- Status Upload  -->
+                        </div><!-- Widget Area -->
+                    </div>
+
+                </div>
+
+
+                <div class="tab-pane " id="profile">
                     <hr>
                     <form:form class="form" action="#" method="post" id="updateinfo"
                                modelAttribute="hosotaikhoan">
@@ -134,7 +176,8 @@
 
                             <div class="col-xs-6">
                                 <label><h4>Nơi sống</h4></label>
-                                <input type="text" placeholder="Nơi sống" class="form-control"  readonly="readonly" value="<c:if
+                                <input type="text" placeholder="Nơi sống" class="form-control" readonly="readonly"
+                                       value="<c:if
                                         test="${(hosotaikhoan.noiSong.tentinhthanh != null)&&(hosotaikhoan.noiSong.quanhuyen.tenquanhuyen != null)}">${hosotaikhoan.noiSong.quanhuyen.tenquanhuyen} - ${hosotaikhoan.noiSong.tentinhthanh} </c:if>"/>
                                 <button type="button" class="btn btn-info btn-group-lg" data-toggle="modal"
                                         data-target="#myModal">Thay đổi nơi sống
@@ -264,6 +307,7 @@
 
     </div><!--/col-9-->
 </div><!--/row-->
+
 <script src="/resources/js/update-profile.js"></script>
 <script src="/resources/js/tinhthanh-profile.js"></script>
 </body>

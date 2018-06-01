@@ -57,6 +57,7 @@ public class RegisterController {
             taiKhoanService.addTaiKhoan(taiKhoan);
             hoSoTaiKhoan.setEmail(taiKhoan.getEmail());
             hoSoTaiKhoan.setTenHienThi(getNameFromEmail(taiKhoan.getEmail()));
+            hoSoTaiKhoan.setAnhDaiDien(new HinhAnh("tempory.png",new Date(),0));
             hoSoTaiKhoanService.addHoSoTaiKhoan(hoSoTaiKhoan);
             model.addAttribute("notice", "Đăng ký thành công, hãy đăng nhập để sử dụng!");
             return "login";

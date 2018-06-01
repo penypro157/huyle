@@ -19,4 +19,5 @@ public interface IHoSoTaiKhoanService {
     boolean deleteHoSoTaiKhoanByEmail(String email);
     boolean deleteHoSoTaiKhoanById(ObjectId id);
     boolean addHoSoTaiKhoan(HoSoTaiKhoan hoSoTaiKhoan);
+    ObjectId getObjectIdByEmail(String email);
 }

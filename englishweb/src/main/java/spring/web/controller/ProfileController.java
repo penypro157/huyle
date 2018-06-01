@@ -1,5 +1,6 @@
 package spring.web.controller;
 
+import org.apache.commons.io.FilenameUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -100,7 +101,7 @@ public class ProfileController {
 
     @RequestMapping(value = "/uploadimage", method = RequestMethod.POST)
     public @ResponseBody
-    String setImage(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+    String setImage(@RequestParam("avatar-file") MultipartFile file, HttpServletRequest request) {
         String email = authentication.getAuthentication().getName();
         String rootPath = request.getServletContext().getRealPath("");
         String uploadFolder = "\\resources\\image\\hinhdaidien\\";
@@ -215,6 +216,19 @@ public class ProfileController {
         System.out.println("thất bại");
         return false;
     }
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public @ResponseBody String upload(@RequestParam("file") MultipartFile multipartFile){
+        File file = new File("E:\\image1.mp4");
+        try {
+            multipartFile.transferTo(file);
+            return FilenameUtils.getExtension(multipartFile.getOriginalFilename());
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+
+    }
 
 }

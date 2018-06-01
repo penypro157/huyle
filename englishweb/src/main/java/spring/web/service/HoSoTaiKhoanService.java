@@ -5,9 +5,11 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import spring.web.entity.BaiDang;
 import spring.web.entity.HinhAnh;
 import spring.web.entity.HoSoTaiKhoan;
 import spring.web.entity.TaiKhoan;
@@ -139,6 +141,22 @@ public class HoSoTaiKhoanService implements IHoSoTaiKhoanService {
 
         }
         return false;
+    }
+
+    @Override
+    public ObjectId getObjectIdByEmail(String email) {
+        HoSoTaiKhoan hoSoTaiKhoan = null;
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is(email));
+        query.fields().include("_id");
+        try{
+            hoSoTaiKhoan=mongoTemplate.findOne(query,HoSoTaiKhoan.class);
+            return hoSoTaiKhoan.getId();
+
+        }catch (Exception e){
+
+        }
+        return null;
     }
 
 

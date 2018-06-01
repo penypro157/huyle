@@ -60,25 +60,9 @@ public class classC {
 //            e.printStackTrace();
 //        }
 
-        File file= new File("E:\\\\newimage.JPG");
+        File file= new File("E:\\image1.JPG");
         BufferedImage image=null;
-        try {
-         image= ImageIO.read(file);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        AffineTransform tx = new AffineTransform();
-        tx.rotate(2, image.getWidth() / 2, image.getHeight() / 2);
-
-        AffineTransformOp op = new AffineTransformOp(tx,
-                AffineTransformOp.TYPE_BILINEAR);
-        image = op.filter(image, null);
-        try {
-            ImageIO.write(image,"JPG",new File("E:\\\\newimage.JPG"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
     }

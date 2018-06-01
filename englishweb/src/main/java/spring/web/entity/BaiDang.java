@@ -3,6 +3,7 @@ package spring.web.entity;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Id;
 import javax.xml.crypto.Data;
@@ -13,16 +14,24 @@ import java.util.Date;
 public class BaiDang {
     @Id
     private ObjectId id;
+    @Field("nguoidang")
     @DBRef
     private ObjectId nguoiDang;
+    @Field("noidung")
     private String noiDung;
+    @Field("hinhanh")
     private ArrayList<HinhAnh> dsHinhAnh;
+    @Field("chiase")
     @DBRef
     private ObjectId chiaSe;
+    @Field("thoigian")
     private Date thoiGian;
+    @Field("luotthich")
     private long luotThich;
+    @Field("luotbinhluan")
     private long luotBinhLuan;
-    protected long luotChiaSe;
+    @Field("luotchiase")
+    private long luotChiaSe;
 
     public BaiDang(ObjectId id, ObjectId nguoiDang, String noiDung, ArrayList<HinhAnh> dsHinhAnh, ObjectId chiaSe, Date thoiGian, long luotThich, long luotBinhLuan, long luotChiaSe) {
         this.id = id;
