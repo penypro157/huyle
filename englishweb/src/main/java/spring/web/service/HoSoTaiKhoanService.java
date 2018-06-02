@@ -145,18 +145,22 @@ public class HoSoTaiKhoanService implements IHoSoTaiKhoanService {
 
     @Override
     public ObjectId getObjectIdByEmail(String email) {
-        HoSoTaiKhoan hoSoTaiKhoan = null;
+        ObjectId objectId =null;
+        HoSoTaiKhoan hoSoTaiKhoan =null;
         Query query = new Query();
         query.addCriteria(Criteria.where("email").is(email));
         query.fields().include("_id");
         try{
             hoSoTaiKhoan=mongoTemplate.findOne(query,HoSoTaiKhoan.class);
-            return hoSoTaiKhoan.getId();
+            objectId=hoSoTaiKhoan.getId();
+            return objectId;
+        }
+        catch (Exception e){
 
-        }catch (Exception e){
 
         }
-        return null;
+
+        return objectId;
     }
 
 

@@ -19,17 +19,7 @@ public class TaiKhoanService implements ITaiKhoanService {
     @Qualifier(value = "mongoTemplate")
     MongoTemplate mongoTemplate;
 
-    @Override
-    public TaiKhoan getTaiKhoanById(ObjectId id) {
-        TaiKhoan taiKhoan = null;
-        try {
-            taiKhoan = taiKhoanRepo.findById(id);
-            return taiKhoan;
-        } catch (Exception e) {
 
-        }
-        return taiKhoan;
-    }
 
     @Override
     public TaiKhoan getTaiKhoanByEmail(String email) {

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import spring.web.beans.IAuthentication;
 import spring.web.beans.ImageHandler;
 import spring.web.entity.*;
+import spring.web.service.BaiDangService;
 import spring.web.service.HoSoTaiKhoanService;
 import spring.web.service.TinhThanhService;
 
@@ -35,7 +36,8 @@ public class ProfileController {
     HoSoTaiKhoanService hoSoTaiKhoanService;
     @Autowired
     TinhThanhService tinhThanhService;
-
+    @Autowired
+    BaiDangService baiDangService;
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String getProfilePage(Model model) {
         HoSoTaiKhoan hoSoTaiKhoan = null;
@@ -90,7 +92,6 @@ public class ProfileController {
             update.set("sodienthoai", hoSoTaiKhoan.getSodienthoai());
             update.set("gioitinh", hoSoTaiKhoan.getGioiTinh());
             update.set("ngaysinh", hoSoTaiKhoan.getNgaySinh());
-            update.set("noisong", hoSoTaiKhoan.getNoiSong());
             return update;
         } catch (Exception e) {
         }
@@ -221,7 +222,9 @@ public class ProfileController {
         File file = new File("E:\\image1.mp4");
         try {
             multipartFile.transferTo(file);
-            return FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+            BaiDang baiDang = new BaiDang();
+                baiDang=baiDangService.getBaiDangById(new ObjectId("5b110d95e7bcf9386eb448a8"));
+            return baiDang.getHoSoTaiKhoan().getEmail();
 
         } catch (IOException e) {
             e.printStackTrace();

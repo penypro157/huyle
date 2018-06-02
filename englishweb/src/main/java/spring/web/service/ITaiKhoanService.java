@@ -7,7 +7,6 @@ import spring.web.entity.TaiKhoan;
 
 
 public interface ITaiKhoanService {
-    TaiKhoan getTaiKhoanById(ObjectId id);
     TaiKhoan getTaiKhoanByEmail(String email);
     boolean updateTaiKhoan(TaiKhoan taiKhoan);
     boolean addTaiKhoan(TaiKhoan taiKhoan);

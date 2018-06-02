@@ -12,15 +12,19 @@ import org.springframework.web.multipart.MultipartFile;
 import spring.web.beans.IAuthentication;
 import spring.web.entity.BaiDang;
 import spring.web.entity.HinhAnh;
+import spring.web.entity.HoSoTaiKhoan;
 import spring.web.service.BaiDangService;
 import spring.web.service.HoSoTaiKhoanService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Controller
 public class DangBaiController {
@@ -32,7 +36,14 @@ public class DangBaiController {
     IAuthentication authentication;
     @RequestMapping(value = "/dangbai", method = RequestMethod.POST)
     public @ResponseBody
-    BaiDang uploadBaiDang(@RequestParam("noidung") String noidung, @RequestParam("fileanh") List<MultipartFile> files, HttpServletRequest request) {
+    BaiDang uploadBaiDang(@RequestParam("noidung") String noidung1, @RequestParam("fileanh") List<MultipartFile> files, HttpServletRequest request) {
+        byte ptext[] = new byte[0];
+        try {
+            ptext = noidung1.getBytes("ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String noidung = new String(ptext, UTF_8);
         String email = authentication.getAuthentication().getName();
         String rootPath = request.getServletContext().getRealPath("");
         String uploadFolder = "\\resources\\image\\baidang\\";
@@ -42,12 +53,12 @@ public class DangBaiController {
             tenhinhanh=uploadHinhAnh(files,rootPath,uploadFolder);
                 baiDang=setNoiDungBaiDang(tenhinhanh,noidung);
                 baiDang.setThoiGian(new Date());
-                baiDang.setNguoiDang(getObjectIDNguoiDang(email));
-                if(setHinhAnhHoSoTaiKhoan(email,tenhinhanh))
+                baiDang.setHoSoTaiKhoan(getNguoiDang(email));
+                if(setHinhAnhHoSoTaiKhoan(email,tenhinhanh)) {
 
-                        return baiDangService.addBaiDang(baiDang);
+                    return baiDangService.addBaiDang(baiDang);
 
-
+                }
 
 
 
@@ -61,6 +72,7 @@ public class DangBaiController {
         ArrayList<String> dstenhinhanh= new ArrayList<>();
         for (MultipartFile multipartFile: multipartFiles
              ) {
+            if(multipartFile.getSize()==0) break;
             String format= FilenameUtils.getExtension(multipartFile.getOriginalFilename());
             String tenhinhanh= new ObjectId().toString()+"."+format;
             File file= new File(rootPath+folderUpload+tenhinhanh);
@@ -94,16 +106,18 @@ public class DangBaiController {
 
 
     }
-    public ObjectId getObjectIDNguoiDang(String email){
-        ObjectId objectId= null;
+    public HoSoTaiKhoan getNguoiDang(String email){
+        HoSoTaiKhoan hoSoTaiKhoan= null;
         try{
-            objectId=hoSoTaiKhoanService.getObjectIdByEmail(email);
-            return  objectId;
+            Query query = new Query();
+            query.addCriteria(Criteria.where("email").is(email));
+            hoSoTaiKhoan= hoSoTaiKhoanService.getHoSoTaiKhoan(query);
+            return  hoSoTaiKhoan;
         }catch (Exception e){
 
 
         }
-            return  objectId;
+            return  hoSoTaiKhoan;
     }
 
     public boolean setHinhAnhHoSoTaiKhoan(String email, List<String> tenhinhanh) {
@@ -131,6 +145,13 @@ public class DangBaiController {
 
 
         return true;
+
+    }
+    @RequestMapping(value = "/xembaidang")
+    public @ResponseBody
+    List<BaiDang> getBaiDang(){
+    List<BaiDang> baiDangList = null;
+    return baiDangList;
 
     }
 }

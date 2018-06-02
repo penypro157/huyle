@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public interface BaiDangRepository extends MongoRepository<BaiDang, ObjectId> {
     BaiDang findById(ObjectId id);
-    ArrayList<BaiDang> findByNguoiDang(ObjectId id);
     boolean deleteById(ObjectId id);
 
 }

@@ -1,6 +1,7 @@
 package spring.web.entity;
 
 import org.bson.types.ObjectId;
+import org.hibernate.annotations.Cascade;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -9,14 +10,15 @@ import javax.persistence.Id;
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Document
 public class BaiDang {
     @Id
     private ObjectId id;
     @Field("nguoidang")
-    @DBRef
-    private ObjectId nguoiDang;
+    @DBRef(lazy = false)
+    private HoSoTaiKhoan hoSoTaiKhoan;
     @Field("noidung")
     private String noiDung;
     @Field("hinhanh")
@@ -32,10 +34,22 @@ public class BaiDang {
     private long luotBinhLuan;
     @Field("luotchiase")
     private long luotChiaSe;
+    @Field("dsthich")
+    @DBRef
+    private List<Thich> dsThich;
+    @Field("dsbinhluan")
+    @DBRef
+    private List<BinhLuan> dsBinhLuan;
+    @Field("dschiase")
+    @DBRef
+    private List<ChiaSe> dsChiaSe;
 
-    public BaiDang(ObjectId id, ObjectId nguoiDang, String noiDung, ArrayList<HinhAnh> dsHinhAnh, ObjectId chiaSe, Date thoiGian, long luotThich, long luotBinhLuan, long luotChiaSe) {
+    public BaiDang() {
+    }
+
+    public BaiDang(ObjectId id, HoSoTaiKhoan hoSoTaiKhoan, String noiDung, ArrayList<HinhAnh> dsHinhAnh, ObjectId chiaSe, Date thoiGian, long luotThich, long luotBinhLuan, long luotChiaSe, List<Thich> dsThich, List<BinhLuan> dsBinhLuan, List<ChiaSe> dsChiaSe) {
         this.id = id;
-        this.nguoiDang = nguoiDang;
+        this.hoSoTaiKhoan = hoSoTaiKhoan;
         this.noiDung = noiDung;
         this.dsHinhAnh = dsHinhAnh;
         this.chiaSe = chiaSe;
@@ -43,9 +57,9 @@ public class BaiDang {
         this.luotThich = luotThich;
         this.luotBinhLuan = luotBinhLuan;
         this.luotChiaSe = luotChiaSe;
-    }
-
-    public BaiDang() {
+        this.dsThich = dsThich;
+        this.dsBinhLuan = dsBinhLuan;
+        this.dsChiaSe = dsChiaSe;
     }
 
     public ObjectId getId() {
@@ -56,12 +70,12 @@ public class BaiDang {
         this.id = id;
     }
 
-    public ObjectId getNguoiDang() {
-        return nguoiDang;
+    public HoSoTaiKhoan getHoSoTaiKhoan() {
+        return hoSoTaiKhoan;
     }
 
-    public void setNguoiDang(ObjectId nguoiDang) {
-        this.nguoiDang = nguoiDang;
+    public void setHoSoTaiKhoan(HoSoTaiKhoan hoSoTaiKhoan) {
+        this.hoSoTaiKhoan = hoSoTaiKhoan;
     }
 
     public String getNoiDung() {
@@ -118,5 +132,29 @@ public class BaiDang {
 
     public void setLuotChiaSe(long luotChiaSe) {
         this.luotChiaSe = luotChiaSe;
+    }
+
+    public List<Thich> getDsThich() {
+        return dsThich;
+    }
+
+    public void setDsThich(List<Thich> dsThich) {
+        this.dsThich = dsThich;
+    }
+
+    public List<BinhLuan> getDsBinhLuan() {
+        return dsBinhLuan;
+    }
+
+    public void setDsBinhLuan(List<BinhLuan> dsBinhLuan) {
+        this.dsBinhLuan = dsBinhLuan;
+    }
+
+    public List<ChiaSe> getDsChiaSe() {
+        return dsChiaSe;
+    }
+
+    public void setDsChiaSe(List<ChiaSe> dsChiaSe) {
+        this.dsChiaSe = dsChiaSe;
     }
 }

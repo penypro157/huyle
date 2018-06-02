@@ -16,13 +16,15 @@
 <!------ Include the above in your HEAD tag ---------->
 <head>
     <title>Bootstrap Example</title>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/resources/css/statusbox.css">
     <link rel="stylesheet" href="/resources/css/profile-css.css">
+    <link rel="stylesheet" href="/resources/css/postframe.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 </head>
 <body>
 <hr>
@@ -95,12 +97,15 @@
             <div class="tab-content">
 
                 <div class="tab-pane active" id="home">
-                    <div class="col-md-6">
-                        <div class="widget-area no-padding blank">
+
+                    <div class="col-sm-9"><%--Đây là form đăng bài--%>
+                        <div class="widget-area no-padding blank panel-shadow">
                             <div class="status-upload">
-                                <form>
-                                    <textarea placeholder="What are you doing right now?"></textarea>
-                                    <input type="file" multiple name="imagefile" hidden="hidden" id="upload-image">
+                                <form action="/dangbai" method="POST" enctype="multipart/form-data"
+                                      id="form-upload-post" accept-charset="utf-8">
+                                    <textarea placeholder="What are you doing right now?" id="content-post"
+                                              name="noidung"></textarea>
+                                    <input type="file" multiple name="fileanh" hidden="hidden" id="upload-image">
                                     <ul>
                                         <li>
                                             <button type="button" class="btn-info" onclick="uploadimage()">Thêm ảnh
@@ -112,12 +117,173 @@
                                             }
                                         </script>
                                     </ul>
-                                    <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i>
+                                    <button type="submit" class="btn btn-success green" id="btn-upload-post"><i
+                                            class="fa fa-share"></i>
                                         Post
                                     </button>
                                 </form>
                             </div><!-- Status Upload  -->
-                        </div><!-- Widget Area -->
+                        </div>
+                    </div><!-- Widget Area --><%--Đây là form đăng bài--%>
+
+
+                    <div class="col-sm-9" id="post-area">
+                        <div class="panel panel-white post panel-shadow"><%--đây là vùng hiển thị bài đăng--%>
+                            <div class="post-heading">
+                                <div class="pull-left image">
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
+                                         alt="user profile image">
+                                </div>
+                                <div class="pull-left meta">
+                                    <div class="title h5">
+                                        <a href="#"><b>Ryan Haywood</b></a>
+                                        made a post.
+                                    </div>
+                                    <h6 class="text-muted time">1 minute ago</h6>
+                                </div>
+                            </div>
+                            <div class="post-description">
+                                <p>Bootdey is a gallery of free snippets resources templates and utilities for bootstrap
+                                    css hmtl js framework. Codes for developers and web designers</p>
+                                <div class="stats">
+                                    <a href="#" class="btn btn-default stat-item active">
+                                        <i class="fa fa-thumbs-up icon"></i>2
+                                    </a>
+                                    <a href="#" class="btn btn-default stat-item">
+                                        <i class="fa fa-share icon"></i>12
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="post-footer">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Add a comment" type="text">
+                                    <span class="input-group-addon">
+                        <a href="#"><i class="fa fa-edit"></i></a>
+                    </span>
+                                </div>
+                                <ul class="comments-list">
+                                    <li class="comment">
+                                        <a class="pull-left" href="#">
+                                            <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg"
+                                                 alt="avatar">
+                                        </a>
+                                        <div class="comment-body">
+                                            <div class="comment-heading">
+                                                <h4 class="user">Gavino Free</h4>
+                                                <h5 class="time">5 minutes ago</h5>
+                                            </div>
+                                            <p>Sure, oooooooooooooooohhhhhhhhhhhhhhhh</p>
+                                        </div>
+                                        <ul class="comments-list">
+                                            <li class="comment">
+                                                <a class="pull-left" href="#">
+                                                    <img class="avatar" src="https://bootdey.com/img/Content/user_3.jpg"
+                                                         alt="avatar">
+                                                </a>
+                                                <div class="comment-body">
+                                                    <div class="comment-heading">
+                                                        <h4 class="user">Ryan Haywood</h4>
+                                                        <h5 class="time">3 minutes ago</h5>
+                                                    </div>
+                                                    <p>Relax my friend</p>
+                                                </div>
+                                            </li>
+                                            <li class="comment">
+                                                <a class="pull-left" href="#">
+                                                    <img class="avatar" src="https://bootdey.com/img/Content/user_2.jpg"
+                                                         alt="avatar">
+                                                </a>
+                                                <div class="comment-body">
+                                                    <div class="comment-heading">
+                                                        <h4 class="user">Gavino Free</h4>
+                                                        <h5 class="time">3 minutes ago</h5>
+                                                    </div>
+                                                    <p>Ok, cool.</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="panel panel-white post panel-shadow"> <%--đây là vùng hiển thị bài đăng--%>
+                            <div class="post-heading">
+                                <div class="pull-left image">
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
+                                         alt="user profile image">
+                                </div>
+                                <div class="pull-left meta">
+                                    <div class="title h5">
+                                        <a href="#"><b>Ryan Haywood</b></a>
+                                        made a post.
+                                    </div>
+                                    <h6 class="text-muted time">1 minute ago</h6>
+                                </div>
+                            </div>
+                            <div class="post-description">
+                                <p>Bootdey is a gallery of free snippets resources templates and utilities for bootstrap css
+                                    hmtl js framework. Codes for developers and web designers</p>
+                                <div class="stats">
+                                    <a href="#" class="btn btn-default stat-item">
+                                        <i class="fa fa-thumbs-up icon"></i>2
+                                    </a>
+                                    <a href="#" class="btn btn-default stat-item">
+                                        <i class="fa fa-share icon"></i>12
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="post-footer">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Add a comment" type="text">
+                                    <span class="input-group-addon">
+                        <a href="#"><i class="fa fa-edit"></i></a>
+                    </span>
+                                </div>
+                                <ul class="comments-list">
+                                    <li class="comment">
+                                        <a class="pull-left" href="#">
+                                            <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg"
+                                                 alt="avatar">
+                                        </a>
+                                        <div class="comment-body">
+                                            <div class="comment-heading">
+                                                <h4 class="user">Gavino Free</h4>
+                                                <h5 class="time">5 minutes ago</h5>
+                                            </div>
+                                            <p>Sure, oooooooooooooooohhhhhhhhhhhhhhhh</p>
+                                        </div>
+                                        <ul class="comments-list">
+                                            <li class="comment">
+                                                <a class="pull-left" href="#">
+                                                    <img class="avatar" src="https://bootdey.com/img/Content/user_3.jpg"
+                                                         alt="avatar">
+                                                </a>
+                                                <div class="comment-body">
+                                                    <div class="comment-heading">
+                                                        <h4 class="user">Ryan Haywood</h4>
+                                                        <h5 class="time">3 minutes ago</h5>
+                                                    </div>
+                                                    <p>Relax my friend</p>
+                                                </div>
+                                            </li>
+                                            <li class="comment">
+                                                <a class="pull-left" href="#">
+                                                    <img class="avatar" src="https://bootdey.com/img/Content/user_2.jpg"
+                                                         alt="avatar">
+                                                </a>
+                                                <div class="comment-body">
+                                                    <div class="comment-heading">
+                                                        <h4 class="user">Gavino Free</h4>
+                                                        <h5 class="time">3 minutes ago</h5>
+                                                    </div>
+                                                    <p>Ok, cool.</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> <%--Đây là vùng hiển thị bài đăng--%>
                     </div>
 
                 </div>
@@ -310,5 +476,8 @@
 
 <script src="/resources/js/update-profile.js"></script>
 <script src="/resources/js/tinhthanh-profile.js"></script>
+<script src="/resources/js/upload-baidang.js"></script>
+<script src="/resources/js/hienthibaidang.js"></script>
+<script src="/resources/js/hienthibaidang.js"></script>
 </body>
 </html>

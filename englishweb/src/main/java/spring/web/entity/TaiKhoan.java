@@ -17,7 +17,6 @@ public class TaiKhoan {
     private String email;
     @Field("matkhau")
     private String password;
-    @Field("matkhau_salt")
     private String password_salt;
     @Field("maxacthucmail")
     private String maXacThucMail;

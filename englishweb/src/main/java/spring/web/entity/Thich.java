@@ -13,7 +13,7 @@ public class Thich {
     @Field("taikhoan")
     @DBRef
     private HoSoTaiKhoan taiKhoan;
-    @Field("mabaidang")
+    @Field("baidang")
     @DBRef
     private BaiDang maBaiDang;
 

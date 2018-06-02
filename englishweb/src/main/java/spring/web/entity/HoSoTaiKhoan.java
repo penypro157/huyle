@@ -28,8 +28,8 @@ public class HoSoTaiKhoan {
     private ObjectId id;
     @Field("tenhienthi")
     private String tenHienThi;
-    @Indexed(unique = true)
     @Field("email")
+    @Indexed(unique = true)
     private String email;
     @Field("ho")
     private String ho;
