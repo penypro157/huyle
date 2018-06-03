@@ -44,6 +44,7 @@ return true;
     }
     public synchronized void boThich(String email, ObjectId maBaiDang){
         thichService.deleteLikedByEmailAndMaBaiDang(email, maBaiDang);
+        baiDangService.deleteNguoiDangFromDsThich(hoSoTaiKhoanService.getObjectIdByEmail(email),maBaiDang);
         baiDangService.addLikeCount(maBaiDang,-1);
     }
 

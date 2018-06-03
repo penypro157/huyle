@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/resources/css/statusbox.css">
     <link rel="stylesheet" href="/resources/css/profile-css.css">
     <link rel="stylesheet" href="/resources/css/postframe.css">
+    <link rel="stylesheet" href="/resources/css/post.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
@@ -107,6 +108,7 @@
                                               name="noidung"></textarea>
                                     <input type="file" multiple name="fileanh" hidden="hidden" id="upload-image">
                                     <ul>
+                                    <ul>
                                         <li>
                                             <button type="button" class="btn-info" onclick="uploadimage()">Thêm ảnh
                                             </button>
@@ -145,6 +147,15 @@
                             <div class="post-description">
                                 <p>Bootdey is a gallery of free snippets resources templates and utilities for bootstrap
                                     css hmtl js framework. Codes for developers and web designers</p>
+                                <div class="row"  >
+                                        <img  src="/resources/image/hinhdaidien/${hosotaikhoan.anhDaiDien.duongDan}" class="img-rounded post-image" alt="Cinque Terre">
+                                    <img src="/resources/image/hinhdaidien/${hosotaikhoan.anhDaiDien.duongDan}"
+                                         class="img-rounded post-image" alt="Cinque Terre">
+
+                                <img src="/resources/image/symbol.png" class="img-rounded" alt="Cinque Terre">
+                                    <%--<img src="/resources/image/symbol.png" class="img-rounded" alt="Cinque Terre">--%>
+                                    <%--<img src="/resources/image/symbol.png" class="img-rounded" alt="Cinque Terre">--%>
+                                </div>
                                 <div class="stats">
                                     <a href="#" class="btn btn-default stat-item active">
                                         <i class="fa fa-thumbs-up icon"></i>2
@@ -478,6 +489,6 @@
 <script src="/resources/js/tinhthanh-profile.js"></script>
 <script src="/resources/js/upload-baidang.js"></script>
 <script src="/resources/js/hienthibaidang.js"></script>
-<script src="/resources/js/hienthibaidang.js"></script>
+<script src="/resources/js/tuongtac-baidang.js"></script>
 </body>
 </html>

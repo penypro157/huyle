@@ -64,8 +64,8 @@ function isImage(file) {
 }
 
 function hienthibaidang(data) {
-
-    var post = '                    <div class="panel panel-white post panel-shadow">\n' +
+    var mabaidang= ObjectId(data.id).toString();
+    var post = '                    <div class="panel panel-white post panel-shadow" id="' + mabaidang + '">\n' +
         '                        <div class="post-heading">\n' +
         '                            <div class="pull-left image">\n' +
         '                                <img src="/resources/image/hinhdaidien/' + data.hoSoTaiKhoan.anhDaiDien.duongDan + '" class="img-circle avatar" alt="user profile image">\n' +
@@ -75,17 +75,17 @@ function hienthibaidang(data) {
         '                                    <a href="#"><b>' + data.hoSoTaiKhoan.tenHienThi + '</b></a>\n' +
         '                                    đăng một bài viết\n' +
         '                                </div>\n' +
-        '                                <h6 class="text-muted time">'+hienthoigian(data.thoiGian)+'</h6>\n' +
+        '                                <h6 class="text-muted time">' + hienthoigian(data.thoiGian) + '</h6>\n' +
         '                            </div>\n' +
         '                        </div>\n' +
         '                        <div class="post-description">\n' +
         '                            <p>' + data.noiDung + '</p>\n' +
         '                            <div class="stats">\n' +
-        '                                <a href="#" class="btn btn-default stat-item">\n' +
-        '                                    <i class="fa fa-thumbs-up icon"></i>' + data.luotThich + '\n' +
+        '                                <a href="" class="btn btn-default stat-item" onclick=" onClick(this,\''+mabaidang+'\')">\n' +
+        '                                    <i class="fa fa-thumbs-up icon"></i><p>' + data.luotThich + '</p>\n' +
         '                                </a>\n' +
-        '                                <a href="#" class="btn btn-default stat-item">\n' +
-        '                                    <i class="fa fa-share icon"></i>' + data.luotBinhLuan + '\n' +
+        '                                <a href="" class="btn btn-default stat-item">\n' +
+        '                                    <i class="fa fa-share icon"></i>' + data.luotChiaSe + '\n' +
         '                                </a>\n' +
         '                            </div>\n' +
         '                        </div>\n' +
@@ -149,15 +149,14 @@ function hienthoigian(thoigian) {
     var lastTime = currentTime - thoigian;
     if (lastTime < (60 * 1000)) return "vừa xong";
     else {
-        if (lastTime < (60 * 60 * 1000)) return getMinutesFromMiliSecond(lastTime)+' phút trước';
+        if (lastTime < (60 * 60 * 1000)) return getMinutesFromMiliSecond(lastTime) + ' phút trước';
         else {
-            if(lastTime<(60*60*24*1000)) return getHoursFromMiliseconds(lastTime)+' giờ trước';
-            else return 'vào lúc '+getDateTimeString(thoigian);
+            if (lastTime < (60 * 60 * 24 * 1000)) return getHoursFromMiliseconds(lastTime) + ' giờ trước';
+            else return 'vào lúc ' + getDateTimeString(thoigian);
         }
 
 
-
-}
+    }
 }
 
 function getMinutesFromMiliSecond(miliseconds) {
@@ -166,16 +165,18 @@ function getMinutesFromMiliSecond(miliseconds) {
 
 
 }
+
 function getHoursFromMiliseconds(miliseconds) {
-    var hours=Math.round(miliseconds/(60*60*1000));
+    var hours = Math.round(miliseconds / (60 * 60 * 1000));
     return hours;
 
 }
+
 function getDateTimeString(thoigian) {
-    var date= new Date(thoigian);
-    var day= date.getDay();
-    var month=date.getMonth();
-    var year= date.getFullYear();
-    return day+'-'+month+'-'+year;
-    
+    var date = new Date(thoigian);
+    var day = date.getDay();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    return day + '-' + month + '-' + year;
+
 }

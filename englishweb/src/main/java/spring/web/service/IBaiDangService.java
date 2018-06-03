@@ -14,6 +14,7 @@ public interface IBaiDangService {
     boolean updateBaiDang(BaiDang baiDang);
     boolean deleteBaiDangById(ObjectId id);
     boolean deleteBaiDang(Query query);
+    boolean deleteNguoiDangFromDsThich(ObjectId maHoSoTaiKhoan,ObjectId maBaiDang);
     BaiDang getBaiDangById(ObjectId id);
     BaiDang getSpecifyElementFromBaiDang(ObjectId maBaiDang, String nameField);
     ArrayList<BaiDang> getBaiDangByNguoiDang(ObjectId id);

@@ -17,7 +17,9 @@ $(document).ready(function () {
 
 function hienthitatcabaidang(data) {
     $.each(data, function (index, item) {
-        var post = '                    <div class="panel panel-white post panel-shadow" id="baidang">\n' +
+        var mabaidang= ObjectId(item.id).toString();
+        var picture= ;
+        var post = '                    <div class="panel panel-white post panel-shadow" id="'+mabaidang+'" >\n' +
             '                        <div class="post-heading">\n' +
             '                            <div class="pull-left image">\n' +
             '                                <img src="/resources/image/hinhdaidien/' + item.hoSoTaiKhoan.anhDaiDien.duongDan + '" class="img-circle avatar" alt="user profile image">\n' +
@@ -34,11 +36,11 @@ function hienthitatcabaidang(data) {
             '                        <div class="post-description">\n' +
             '                            <p>' + item.noiDung + '</p>\n' +
             '                            <div class="stats">\n' +
-            '                                <a href="#" class="btn btn-default stat-item" id="btn-thich">\n' +
-            '                                    <i class="fa fa-thumbs-up icon"></i>' + item.luotThich + '\n' +
+            '                                <a class="btn btn-default stat-item" onclick=" onClick(this,\''+mabaidang+'\')">\n' +
+            '                                    <i class="fa fa-thumbs-up icon"></i><p>' + item.luotThich + '</p>\n' +
             '                                </a>\n' +
-            '                                <a href="#" class="btn btn-default stat-item">\n' +
-            '                                    <i class="fa fa-share icon"></i>' + item.luotBinhLuan + '\n' +
+            '                                <a  class="btn btn-default stat-item">\n' +
+            '                                    <i class="fa fa-share icon"></i>' + item.luotChiaSe + '\n' +
             '                                </a>\n' +
             '                            </div>\n' +
             '                        </div>\n' +
@@ -97,3 +99,27 @@ function hienthitatcabaidang(data) {
 
 
 }
+var ObjectId = function (json) {
+    this.timestamp  = json.timeSecond;
+    this.machine    = json.machine;
+    this.increment  = json.inc;
+
+    if (this.__proto__.constructor !== ObjectId) {
+        return new ObjectId(json);
+    }
+    var hex = function(number){
+        if (number < 0) {
+            number = 0xFFFFFFFF + number + 1;
+        }
+        return number.toString(16).toLowerCase();
+    }
+
+    this.toString = function () {
+        var timestamp   =   hex(this.timestamp);
+        var machine     =   hex(this.machine);
+        var increment   =   hex(this.increment);
+        return '00000000'.substr(0, 6 - timestamp.length) + timestamp +
+            '00000000'.substr(0, 6 - machine.length)   + machine   +
+            '00000000'.substr(0, 6 - increment.length) + increment ;
+    };
+};

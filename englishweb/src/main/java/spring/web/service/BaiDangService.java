@@ -56,6 +56,23 @@ public class    BaiDangService implements IBaiDangService {
     }
 
     @Override
+    public boolean deleteNguoiDangFromDsThich(ObjectId maHoSoTaiKhoan, ObjectId maBaiDang) {
+
+        Query query= new Query();
+        query.addCriteria(Criteria.where("_id").is(maBaiDang));
+        Update update = new Update();
+        update.pull("dsthich",Query.query(Criteria.where("_id").is(maHoSoTaiKhoan)));
+        try{
+        mongoTemplate.updateFirst(query,update,BaiDang.class);
+        return true;
+        }catch (Exception e){
+
+
+        }
+        return false;
+    }
+
+    @Override
     public BaiDang getBaiDangById(ObjectId id) {
         try{
 
