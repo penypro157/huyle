@@ -15,20 +15,20 @@ public class BinhLuan {
     @Field("noidung")
     private String noiDung;
     @Field("taikhoan")
-    @DBRef
+    @DBRef(lazy = true)
     private HoSoTaiKhoan taikhoan;
     @Field("thoigian")
     private Date thoiGian;
     @Field("mabaidang")
-    @DBRef
-    private BaiDang maBaiDang;
+    @DBRef(lazy = true)
+    private BaiDang baiDang;
 
-    public BinhLuan(ObjectId id, String noiDung, HoSoTaiKhoan taikhoan, Date thoiGian, BaiDang maBaiDang) {
+    public BinhLuan(ObjectId id, String noiDung, HoSoTaiKhoan taikhoan, Date thoiGian, BaiDang baiDang) {
         this.id = id;
         this.noiDung = noiDung;
         this.taikhoan = taikhoan;
         this.thoiGian = thoiGian;
-        this.maBaiDang = maBaiDang;
+        this.baiDang = baiDang;
     }
 
     public BinhLuan() {
@@ -66,11 +66,11 @@ public class BinhLuan {
         this.thoiGian = thoiGian;
     }
 
-    public BaiDang getMaBaiDang() {
-        return maBaiDang;
+    public BaiDang getBaiDang() {
+        return baiDang;
     }
 
-    public void setMaBaiDang(BaiDang maBaiDang) {
-        this.maBaiDang = maBaiDang;
+    public void setBaiDang(BaiDang baiDang) {
+        this.baiDang = baiDang;
     }
 }

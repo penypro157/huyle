@@ -35,8 +35,10 @@
                 <div class="col-sm-6">
                     <div class="contactinfo">
                         <ul class="nav nav-pills">
-                            <li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-                            <li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                            <li><a href=""><i class="fa fa-phone"></i> 0168 733 9910</a></li>
+                            <li><a href=""><i class="fa fa-envelope"></i> huyl472@gmail.com</a></li>
+                            <li> <a href="/register" ><i class="fa fa-pencil">Đăng ký</i></a></li>
+                            <li> <a href="/login" ><i class="fa fa-key">Đăng nhập</i></a></li>
                         </ul>
                     </div>
                 </div>

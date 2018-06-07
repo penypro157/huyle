@@ -19,7 +19,8 @@ public class VerifyMail extends Mail {
 
     @Override
      String getContent() {
-        String tempory="Click here to active your account " +
+        String tempory="<b>Welcome to Social website, Thanks for your registering account. \n</>" +
+                "Click here to active your account " +
                 "<a href=\"http://localhost:8080/active?code="+randomString+"\">"+randomString+"</a>";
         return tempory;
     }

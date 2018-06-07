@@ -9,12 +9,27 @@ public class BanBe {
     private HinhAnh anhDaiDien;
     private Date thoiGianHoatDong;
     private ObjectId maHoSoTaiKhoan;
+    private TrangThaiBanBe trangThaiBanBe;
+    private Date thoigian;
 
-    public BanBe(String tenHienThi, HinhAnh anhDaiDien, Date thoiGianHoatDong, ObjectId maHoSoTaiKhoan) {
+    public BanBe(String tenHienThi, HinhAnh anhDaiDien, Date thoiGianHoatDong, ObjectId maHoSoTaiKhoan, TrangThaiBanBe trangThaiBanBe, Date thoiGian) {
         this.tenHienThi = tenHienThi;
         this.anhDaiDien = anhDaiDien;
         this.thoiGianHoatDong = thoiGianHoatDong;
         this.maHoSoTaiKhoan = maHoSoTaiKhoan;
+        this.trangThaiBanBe = trangThaiBanBe;
+        this.thoigian=thoiGian;
+    }
+
+    public BanBe() {
+    }
+
+    public Date getThoigian() {
+        return thoigian;
+    }
+
+    public void setThoigian(Date thoigian) {
+        this.thoigian = thoigian;
     }
 
     public String getTenHienThi() {
@@ -47,6 +62,14 @@ public class BanBe {
 
     public void setMaHoSoTaiKhoan(ObjectId maHoSoTaiKhoan) {
         this.maHoSoTaiKhoan = maHoSoTaiKhoan;
+    }
+
+    public TrangThaiBanBe getTrangThaiBanBe() {
+        return trangThaiBanBe;
+    }
+
+    public void setTrangThaiBanBe(TrangThaiBanBe trangThaiBanBe) {
+        this.trangThaiBanBe = trangThaiBanBe;
     }
 }
 

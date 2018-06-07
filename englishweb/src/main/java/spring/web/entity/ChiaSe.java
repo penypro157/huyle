@@ -13,12 +13,12 @@ public class ChiaSe {
     @Id
     private ObjectId id;
     @Field("taikhoan")
-    @DBRef
+    @DBRef(lazy = true)
     private HoSoTaiKhoan taiKhoan;
     @Field("thoigian")
     private Date thoiGian;
     @Field("mabaidang")
-    @DBRef
+    @DBRef(lazy = true)
     private BaiDang maBaiDang;
 
     public ChiaSe(ObjectId id, HoSoTaiKhoan taiKhoan, Date thoiGian, BaiDang maBaiDang) {

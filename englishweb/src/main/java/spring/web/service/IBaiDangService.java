@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import spring.web.entity.BaiDang;
+import spring.web.entity.BinhLuan;
 import spring.web.entity.HoSoTaiKhoan;
 
 import java.util.ArrayList;
@@ -20,6 +21,11 @@ public interface IBaiDangService {
     ArrayList<BaiDang> getBaiDangByNguoiDang(ObjectId id);
     List<BaiDang> getBaiDangByEmail(String email);
     void addLikeCount(ObjectId maBaiDang, int quantity);
+    void addCommentCount(ObjectId maBaiDang, int quantity);
     void updateDSThich(ObjectId maBaiDang, HoSoTaiKhoan hoSoTaiKhoan);
+    void upadteDSComment(ObjectId maBaiDang, BinhLuan binhLuan);
+    long getSoLuongBaiDang(String email);
+    boolean deleteBaiDangByMaBaiDang(ObjectId mabaidang);
+
 
 }

@@ -39,6 +39,7 @@ $(document).ready(function () {
                 url: '/dangbai',
                 data: formData,
                 cache: false,// serializes the form's elements.
+                async: false,
                 contentType: false,
                 processData: false,
             }).done(function (data) {
@@ -64,11 +65,32 @@ function isImage(file) {
 }
 
 function hienthibaidang(data) {
-    var mabaidang= ObjectId(data.id).toString();
+    var mabaidang = ObjectId(data.id).toString();
+    var currentemail = $('#currentemail').val();
+    var editpost='';
+    if (data.hoSoTaiKhoan.email == currentemail) {
+        editpost = '<a href="#" ><i class=" glyphicon glyphicon-edit"></i></a>' +
+            '<a href="#" onclick="deletepost(event,\''+mabaidang+'\')"><i class="glyphicon glyphicon-trash"></i></a>';
+    }
+
+    var dshinhanh = data.dsHinhAnh;
+    var image = '';
+    if (dshinhanh.length > 0) {
+        $.each(dshinhanh, function (index, item) {
+
+            content = '       <div class="post-image">\n' +
+                '\n' +
+                '                                        <img  src="/resources/image/' + item.duongDan + '" class="img-rounded" >\n' +
+                '                                    </div> \n';
+            image += content;
+
+        })
+
+    }
     var post = '                    <div class="panel panel-white post panel-shadow" id="' + mabaidang + '">\n' +
         '                        <div class="post-heading">\n' +
         '                            <div class="pull-left image">\n' +
-        '                                <img src="/resources/image/hinhdaidien/' + data.hoSoTaiKhoan.anhDaiDien.duongDan + '" class="img-circle avatar" alt="user profile image">\n' +
+        '                                <img src="/resources/image/' + data.hoSoTaiKhoan.anhDaiDien.duongDan + '" class="img-circle avatar" alt="user profile image">\n' +
         '                            </div>\n' +
         '                            <div class="pull-left meta">\n' +
         '                                <div class="title h5">\n' +
@@ -77,67 +99,35 @@ function hienthibaidang(data) {
         '                                </div>\n' +
         '                                <h6 class="text-muted time">' + hienthoigian(data.thoiGian) + '</h6>\n' +
         '                            </div>\n' +
+        '                            <div class="pull-right ">\n' + editpost +
+        '                            </div>\n' +
         '                        </div>\n' +
         '                        <div class="post-description">\n' +
         '                            <p>' + data.noiDung + '</p>\n' +
+        '                              <div class="image-area">\n' + image +
+        '                              </div>' +
         '                            <div class="stats">\n' +
-        '                                <a href="" class="btn btn-default stat-item" onclick=" onClick(this,\''+mabaidang+'\')">\n' +
+        '                                <a href="" class="btn btn-default stat-item" onclick=" onClick(this,\'' + mabaidang + '\')">\n' +
         '                                    <i class="fa fa-thumbs-up icon"></i><p>' + data.luotThich + '</p>\n' +
         '                                </a>\n' +
-        '                                <a href="" class="btn btn-default stat-item">\n' +
-        '                                    <i class="fa fa-share icon"></i>' + data.luotChiaSe + '\n' +
+        '                                <a href="" class="btn btn-default stat-item" >\n' +
+        '                                    <i class="fa fa-comment icon"></i><p>' + data.luotBinhLuan + '</p>\n' +
         '                                </a>\n' +
         '                            </div>\n' +
         '                        </div>\n' +
         '                        <div class="post-footer">\n' +
         '                            <div class="input-group">\n' +
         '                                <input class="form-control" placeholder="Add a comment" type="text">\n' +
+        '<a href="" onclick=" getallBinhLuan(this,\''+mabaidang+'\',event)">Xem tất cả bình luận</a>\n' +
         '                                <span class="input-group-addon">\n' +
-        '                        <a href="#"><i class="fa fa-edit"></i></a>\n' +
+        '                        <a href="" onclick="onComment(this,event,\'' + mabaidang + '\')"><i class="fa fa-edit"></i></a>\n' +
         '                    </span>\n' +
         '                            </div>\n' +
         '                            <ul class="comments-list">\n' +
-        '                                <li class="comment">\n' +
-        '                                    <a class="pull-left" href="#">\n' +
-        '                                        <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">\n' +
-        '                                    </a>\n' +
-        '                                    <div class="comment-body">\n' +
-        '                                        <div class="comment-heading">\n' +
-        '                                            <h4 class="user">Gavino Free</h4>\n' +
-        '                                            <h5 class="time">5 minutes ago</h5>\n' +
-        '                                        </div>\n' +
-        '                                        <p>Sure, oooooooooooooooohhhhhhhhhhhhhhhh</p>\n' +
-        '                                    </div>\n' +
-        '                                    <ul class="comments-list">\n' +
-        '                                        <li class="comment">\n' +
-        '                                            <a class="pull-left" href="#">\n' +
-        '                                                <img class="avatar" src="https://bootdey.com/img/Content/user_3.jpg" alt="avatar">\n' +
-        '                                            </a>\n' +
-        '                                            <div class="comment-body">\n' +
-        '                                                <div class="comment-heading">\n' +
-        '                                                    <h4 class="user">Ryan Haywood</h4>\n' +
-        '                                                    <h5 class="time">3 minutes ago</h5>\n' +
-        '                                                </div>\n' +
-        '                                                <p>Relax my friend</p>\n' +
-        '                                            </div>\n' +
-        '                                        </li>\n' +
-        '                                        <li class="comment">\n' +
-        '                                            <a class="pull-left" href="#">\n' +
-        '                                                <img class="avatar" src="https://bootdey.com/img/Content/user_2.jpg" alt="avatar">\n' +
-        '                                            </a>\n' +
-        '                                            <div class="comment-body">\n' +
-        '                                                <div class="comment-heading">\n' +
-        '                                                    <h4 class="user">Gavino Free</h4>\n' +
-        '                                                    <h5 class="time">3 minutes ago</h5>\n' +
-        '                                                </div>\n' +
-        '                                                <p>Ok, cool.</p>\n' +
-        '                                            </div>\n' +
-        '                                        </li>\n' +
-        '                                    </ul>\n' +
-        '                                </li>\n' +
         '                            </ul>\n' +
         '                        </div>\n' +
         '                    </div>';
+
     $('#post-area').prepend(post);
 
 

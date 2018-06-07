@@ -46,7 +46,7 @@ public class DangBaiController {
         String noidung = new String(ptext, UTF_8);
         String email = authentication.getAuthentication().getName();
         String rootPath = request.getServletContext().getRealPath("");
-        String uploadFolder = "\\resources\\image\\baidang\\";
+        String uploadFolder = "\\resources\\image\\";
         BaiDang baiDang = null;
         ArrayList<String> tenhinhanh=null;
         try{

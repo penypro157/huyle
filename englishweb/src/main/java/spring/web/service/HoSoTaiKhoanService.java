@@ -9,11 +9,11 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
-import spring.web.entity.BaiDang;
-import spring.web.entity.HinhAnh;
-import spring.web.entity.HoSoTaiKhoan;
-import spring.web.entity.TaiKhoan;
+import spring.web.entity.*;
 import spring.web.repo.HoSoTaiKhoanRepository;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class HoSoTaiKhoanService implements IHoSoTaiKhoanService {
@@ -22,6 +22,7 @@ public class HoSoTaiKhoanService implements IHoSoTaiKhoanService {
     @Autowired
     @Qualifier(value = "mongoTemplate")
     MongoTemplate mongoTemplate;
+
 
     @Override
     public HoSoTaiKhoan getHoSoTaiKhoanById(ObjectId id) {
@@ -33,6 +34,22 @@ public class HoSoTaiKhoanService implements IHoSoTaiKhoanService {
 
         }
         return hoSoTaiKhoan;
+    }
+
+    @Override
+    public List<HoSoTaiKhoan> getHoSoTaiKhoanByTenHienThiLike(String tenhienthi) {
+        List<HoSoTaiKhoan> hoSoTaiKhoans=null;
+        Query query = new Query();
+        query.addCriteria(Criteria.where("tenhienthi").regex(tenhienthi,"i"));
+        try{
+        hoSoTaiKhoans= mongoTemplate.find(query,HoSoTaiKhoan.class);
+        return hoSoTaiKhoans;
+        }
+        catch (Exception e){
+
+
+        }
+        return hoSoTaiKhoans;
     }
 
     @Override
@@ -70,6 +87,29 @@ public class HoSoTaiKhoanService implements IHoSoTaiKhoanService {
             mongoTemplate.findAndModify(query,update,HoSoTaiKhoan.class);
             return true;
         } catch (Exception e) {
+
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addBanBe(HoSoTaiKhoan sender, HoSoTaiKhoan receiver) {
+//        BanBe reciver = new BanBe();
+//        BanBe sender= new BanBe();
+        try{
+//            sender.setMaHoSoTaiKhoan(hoSoTaiKhoan.getId());
+//            sender.setTenHienThi(hoSoTaiKhoan.getTenHienThi());
+//            sender.setAnhDaiDien(hoSoTaiKhoan.getAnhDaiDien());
+//            sender.setThoigian(new Date());
+//            sender.setTrangThaiBanBe(new TrangThaiBanBe(false,true,TrangThaiBanBe.invite));
+//            reciver.setMaHoSoTaiKhoan(hoSoTaiKhoan.getId());
+//            reciver.setTenHienThi(hoSoTaiKhoan.getTenHienThi());
+//            reciver.setAnhDaiDien(hoSoTaiKhoan.getAnhDaiDien());
+////            reciver.setThoigian(new Date());
+//            reciver.setTrangThaiBanBe(new TrangThaiBanBe(false,true,TrangThaiBanBe.invite));
+        return true;
+        }catch (Exception e){
+
 
         }
         return false;

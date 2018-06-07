@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import spring.web.entity.BaiDang;
+import spring.web.entity.BinhLuan;
 import spring.web.entity.HoSoTaiKhoan;
 import spring.web.entity.Thich;
 import spring.web.repo.BaiDangRepository;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class    BaiDangService implements IBaiDangService {
+public class BaiDangService implements IBaiDangService {
     @Autowired
     BaiDangRepository baiDangRepository;
     @Autowired
@@ -112,7 +113,7 @@ public class    BaiDangService implements IBaiDangService {
         List<BaiDang> baiDangs=null;
         Query query = new Query();
         ObjectId maHoSoTaiKhoan= hoSoTaiKhoanService.getObjectIdByEmail(email);
-        query.addCriteria(Criteria.where("nguoidang.$id").is(maHoSoTaiKhoan));
+                query.addCriteria(Criteria.where("nguoidang.$id").is(maHoSoTaiKhoan));
         try{
             baiDangs=mongoTemplate.find(query,BaiDang.class);
         return baiDangs;
@@ -138,6 +139,21 @@ public class    BaiDangService implements IBaiDangService {
     }
 
     @Override
+    public void addCommentCount(ObjectId maBaiDang, int quantity) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(maBaiDang));
+        Update update = new Update();
+        update.inc("luotbinhluan",quantity);
+        try{
+            mongoTemplate.updateFirst(query,update,BaiDang.class);
+        }
+        catch (Exception e){
+
+
+        }
+    }
+
+    @Override
     public void updateDSThich(ObjectId maBaiDang, HoSoTaiKhoan hoSoTaiKhoan) {
 
         Query query = new Query();
@@ -151,6 +167,53 @@ public class    BaiDangService implements IBaiDangService {
 
 
         }
+    }
+
+    @Override
+    public void upadteDSComment(ObjectId maBaiDang, BinhLuan binhLuan) {
+
+        try{
+            Query query = new Query();
+            query.addCriteria(Criteria.where("_id").is(maBaiDang));
+            Update update =new Update();
+            update.push("dsbinhluan",binhLuan);
+            mongoTemplate.updateFirst(query,update,BaiDang.class);
+
+        }
+        catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public long getSoLuongBaiDang(String email) {
+        long soluongbaidang=0;
+        ObjectId maHoSoTaiKhoan=hoSoTaiKhoanService.getObjectIdByEmail(email);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("nguoidang.$id").is(maHoSoTaiKhoan));
+        try{
+            soluongbaidang = mongoTemplate.count(query,BaiDang.class);
+            return soluongbaidang;
+
+        }catch (Exception e){
+
+        }
+        return soluongbaidang;
+    }
+
+    @Override
+    public boolean deleteBaiDangByMaBaiDang(ObjectId mabaidang) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(mabaidang));
+        try{
+            mongoTemplate.findAllAndRemove(query,BaiDang.class);
+            return true;
+        }
+        catch (Exception e){
+
+
+        }
+        return false;
     }
 
 }

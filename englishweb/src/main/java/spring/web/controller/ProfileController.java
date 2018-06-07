@@ -2,6 +2,7 @@ package spring.web.controller;
 
 import org.apache.commons.io.FilenameUtils;
 import org.bson.types.ObjectId;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -19,6 +20,7 @@ import spring.web.service.TinhThanhService;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,11 +40,16 @@ public class ProfileController {
     TinhThanhService tinhThanhService;
     @Autowired
     BaiDangService baiDangService;
+
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String getProfilePage(Model model) {
+    public String getProfilePage(Model model, @RequestParam("email") String email, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setAttribute("email", authentication.getAuthentication().getName());
+
         HoSoTaiKhoan hoSoTaiKhoan = null;
         List<TinhThanh> tinhThanhs = null;
-        String email = authentication.getAuthentication().getName();
+        long soluongbaidang = 0;
+        long soluonghinhanh = 0;
         if (email != null)
             try {
                 Query query = new Query();
@@ -52,7 +59,13 @@ public class ProfileController {
                 hoSoTaiKhoan = hoSoTaiKhoanService.getHoSoTaiKhoan(query);
                 System.out.println(hoSoTaiKhoan.getGioiTinh());
                 tinhThanhs = tinhThanhService.getAllTinhThanh();
+                soluongbaidang = baiDangService.getSoLuongBaiDang(email);
+                model.addAttribute("friendstatus", checkStatusFriend(authentication.getAuthentication().getName(), email));
+                model.addAttribute("soluongbaidang", soluongbaidang);
+                soluonghinhanh = baiDangService.getSoLuongBaiDang(email);
+                session.setAttribute("hosotaikhoan", hoSoTaiKhoan);
                 model.addAttribute("hosotaikhoan", hoSoTaiKhoan);
+                model.addAttribute("soluonghinhanh",soluonghinhanh);
                 model.addAttribute("tinhthanh", tinhThanhs);
                 System.out.println(hoSoTaiKhoan.getNgaySinh());
                 return "profile";
@@ -63,6 +76,28 @@ public class ProfileController {
 
         return "404";
     }
+
+    public BanBe checkStatusFriend(String author, String email) {
+        HoSoTaiKhoan hoSoTaiKhoan = hoSoTaiKhoanService.getHoSoTaiKhoanByEmail(author);
+        try {
+            List<BanBe> banBes = hoSoTaiKhoan.getDsBanBe();
+            for (BanBe bb : banBes
+                    ) {
+                Query query = new Query();
+                query.addCriteria(Criteria.where("email").is(email));
+                query.fields().include("_id");
+                query.fields().include("email");
+                HoSoTaiKhoan hstk = hoSoTaiKhoanService.getHoSoTaiKhoan(query);
+                if (hstk.getEmail().equals(author)) return bb;
+            }
+        } catch (Exception e) {
+
+
+        }
+
+        return null;
+    }
+
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
     public @ResponseBody
@@ -92,6 +127,7 @@ public class ProfileController {
             update.set("sodienthoai", hoSoTaiKhoan.getSodienthoai());
             update.set("gioitinh", hoSoTaiKhoan.getGioiTinh());
             update.set("ngaysinh", hoSoTaiKhoan.getNgaySinh());
+            update.set("noisong", hoSoTaiKhoan.getNoiSong());
             return update;
         } catch (Exception e) {
         }
@@ -105,7 +141,7 @@ public class ProfileController {
     String setImage(@RequestParam("avatar-file") MultipartFile file, HttpServletRequest request) {
         String email = authentication.getAuthentication().getName();
         String rootPath = request.getServletContext().getRealPath("");
-        String uploadFolder = "\\resources\\image\\hinhdaidien\\";
+        String uploadFolder = "\\resources\\image\\";
         File imageFile = null;
         try {
             imageFile = convertToFile(file);
@@ -198,7 +234,8 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/noisong", method = RequestMethod.GET)
-    public @ResponseBody boolean saveNoiSong(@RequestParam("tentinhthanh") String tentinhthanh, @RequestParam("tenquanhuyen") String tenquanhuyen) {
+    public @ResponseBody
+    boolean saveNoiSong(@RequestParam("tentinhthanh") String tentinhthanh, @RequestParam("tenquanhuyen") String tenquanhuyen) {
         String email = authentication.getAuthentication().getName();
         QuanHuyen quanHuyen = new QuanHuyen();
 
@@ -209,7 +246,9 @@ public class ProfileController {
         try {
 
             if (tinhThanhService.updateNoiSong(email, noiSong)) {
-                System.out.println("thành công");return true;}
+                System.out.println("thành công");
+                return true;
+            }
 
         } catch (Exception e) {
             System.out.println(e);
@@ -217,13 +256,15 @@ public class ProfileController {
         System.out.println("thất bại");
         return false;
     }
+
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public @ResponseBody String upload(@RequestParam("file") MultipartFile multipartFile){
+    public @ResponseBody
+    String upload(@RequestParam("file") MultipartFile multipartFile) {
         File file = new File("E:\\image1.mp4");
         try {
             multipartFile.transferTo(file);
             BaiDang baiDang = new BaiDang();
-                baiDang=baiDangService.getBaiDangById(new ObjectId("5b110d95e7bcf9386eb448a8"));
+            baiDang = baiDangService.getBaiDangById(new ObjectId("5b110d95e7bcf9386eb448a8"));
             return baiDang.getHoSoTaiKhoan().getEmail();
 
         } catch (IOException e) {
