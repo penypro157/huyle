@@ -1,1 +1,2 @@
 select * from me into someone
+where i love you
