@@ -22,6 +22,5 @@
 //            }
 //            client.sendMessage(message);
 //        }
-//        sc.close();
 //    }
 //}
