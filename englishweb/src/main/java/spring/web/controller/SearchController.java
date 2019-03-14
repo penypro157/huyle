@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class SearchController {
+public class SearchController1 {
     @Autowired
     HoSoTaiKhoanService hoSoTaiKhoanService;
     @RequestMapping(value = "timkiemthanhvien",method = RequestMethod.GET)
